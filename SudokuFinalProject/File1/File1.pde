@@ -1,6 +1,5 @@
 //Project Yo
 
-
 void setup(){
   size(600,600);
   background(#B87E3E);
