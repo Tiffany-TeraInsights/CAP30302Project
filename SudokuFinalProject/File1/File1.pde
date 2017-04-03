@@ -4,16 +4,20 @@ boolean inMenu = true;
 String difficulty = "";
 Button B3;
 Button B4;
+Timer Time;
 
 void setup(){
   size(600,600);
   background(#B87E3E);
+  //frameRate = 1;
+  Time = new Timer();
 }
 
 void draw(){
   
   if(inMenu)
   {
+    background(#B87E3E);
     //Background image stuff
     PImage image = loadImage("SudokuMainPic.jpg");
     image(image,width/4,height/8);
@@ -27,6 +31,9 @@ void draw(){
     B4.isOver();
     B3.update();
     B4.update();
+    
+    Time.advance();
+    text(Time.hour() + ":" + Time.minute() + ":" + Time.second(), 100,100);
   }
   else //No longer in menu.
   {
