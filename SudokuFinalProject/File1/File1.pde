@@ -10,9 +10,11 @@ int gameState = 0;
 String difficulty = "";
 Button B3;
 Button B4;
-
+Board sudokuBoard;
 Button wheelGame;
 Timer Time;
+Puzzle puzzle;
+int[][] puzzleSolution;
 int powerBarStrength = 105; //Beginning value for power bar.
 minigame fortuneWheel = new minigame(90);
 boolean oneSpin = true;
@@ -22,6 +24,7 @@ void setup(){
   background(#B87E3E);
   //frameRate = 1;
   Time = new Timer();
+  puzzle=new Puzzle();
 }
 
 void draw(){
@@ -57,9 +60,12 @@ void draw(){
     PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg");
     image(mainWoodBackground, 0, 0);
     
+    sudokuBoard = new Board(); //<>//
+    sudokuBoard.drawBoard(); //<>//
+    //<>//
     //Shadow of side menu
-    fill(0);
-    noStroke();
+    fill(0); //<>//
+    noStroke(); //<>//
     rectMode(CORNERS);
     rect(445, 0, 600, 600);
     
@@ -131,6 +137,10 @@ void mouseClicked()
     if(wheelGame.over) //If the mouse is over the button.
     {
       gameState = 2; //Move Us to Mini Game State.
+    }
+    
+    if(sudokuBoard.overSudokuBoard() == true){
+       sudokuBoard.drawCursor();
     }
   }
 }
