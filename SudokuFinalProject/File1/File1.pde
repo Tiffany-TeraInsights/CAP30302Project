@@ -15,6 +15,7 @@ Button wheelGame;
 Timer Time;
 Puzzle puzzle;
 int[][] puzzleSolution;
+boolean inputMode = false;
 int powerBarStrength = 105; //Beginning value for power bar.
 minigame fortuneWheel = new minigame(90);
 boolean oneSpin = true;
@@ -46,9 +47,6 @@ void draw(){
     B4.isOver();
     B3.update();
     B4.update();
-    
-    Time.advance();
-    text(Time.hour() + ":" + Time.minute() + ":" + Time.second(), 100,100);
   }
   else if(gameState == 1) //Sudoku Puzzle.
   {
@@ -64,10 +62,10 @@ void draw(){
     sudokuBoard.drawBoard(); //<>//
     //<>//
     //Shadow of side menu
-    fill(0); //<>//
-    noStroke(); //<>//
-    rectMode(CORNERS);
-    rect(445, 0, 600, 600);
+    fill(0);
+    noStroke();
+    rectMode(CORNERS); //<>//
+    rect(445, 0, 600, 600); //<>//
     
     //Draw Side Menu Background
     PImage sideMenuBackground = loadImage("Side Menu Bamboo.jpg");
@@ -77,6 +75,10 @@ void draw(){
     wheelGame = new Button(100, 50, 475, 300, "Easy", #B4EBED, #68AFB2, #156164, #C2CECE);
     wheelGame.isOver();
     wheelGame.update();
+    
+    Time.advance();
+    textSize(20);
+    text(Time.hour() + ":" + Time.minute() + ":" + Time.second(), 500,100);
     
     //Cartoony Menu
     /*
@@ -159,6 +161,12 @@ void keyPressed()
         fortuneWheel.setDrawPower(powerBarStrength); //Update Power.
       }
     }
+  }
+  if(gameState == 1){
+   /* if(inputMode && m[rowNum][colNum] == 0 && key>='0' && key<='9') {
+       m[rowNum][colNum] = key - '0'; // '0'
+      inputMode = false;
+    } */
   }
 }
 
