@@ -4,17 +4,15 @@ class Button{
   float bheight;
   float positionX;
   float positionY;
-  color current, normal, pressed, outline, textColor = 255;
+  color current, normal, pressed, outline, textColor;
   String buttonText;
   boolean over,clicked;
 
 
   void isOver(){
-    if(mouseX > (positionX) && mouseX < (bwidth + positionX)){
-       if((mouseY > (positionY)) && (mouseY < (bheight + positionY))){ 
+    if((mouseX > (positionX) && mouseX < (bwidth + positionX)) && ((mouseY > (positionY)) && (mouseY < (bheight + positionY)))){
           current = pressed;
           over = true;
-       }
     }
     else{
        current = normal;
@@ -24,6 +22,8 @@ class Button{
   
   void update(){
     
+    isOver();
+    
     fill(current);
     stroke(outline);
     
@@ -32,8 +32,6 @@ class Button{
     stroke(textColor);
     textSize(40);
     text(buttonText,positionX + 55, positionY + 50);
-    
-    isOver();
     
   }
 
