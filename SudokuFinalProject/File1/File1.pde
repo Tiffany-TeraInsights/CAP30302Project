@@ -90,46 +90,40 @@ void draw(){
     
     rectMode(CORNER);
 
-    wheelGame = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
+    wheelGame = new Button(100, 30, 475, 200, "", #458B86, #68AFB2, #156164, #C2CECE);
     wheelGame.isOver();
     wheelGame.update();
     textSize(14);
     fill(255);
     textAlign(LEFT);
+    text("Mini Game", 480, 220);
+    
+    activateHint = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
 
-    activateHint = new Button(100, 30, 475, 300, "", #B4EBED, #68AFB2, #156164, #C2CECE);
-    text("Mini Game", 480, 250);
 
     //activateHint
     activateHint.isOver();
-
     activateHint.update();
     textSize(14);
     fill(255);
     textAlign(LEFT);
-
-    text("Hint", 480, 300);
-
-    //quit
-    quit = new Button(100, 30, 475, 400, "", #B4EBED, #68AFB2, #156164, #C2CECE);
-
-    text("Hint", 480, 320);
+    text("Hint", 480, 270);
     
-    mark = new Button(100, 30, 475, 340, "", #458B86, #68AFB2, #156164, #C2CECE);
+    mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
     mark.isOver();
     mark.update();
     textSize(14);
     fill(255);
     textAlign(LEFT);
-    text("Mark", 480, 360);
+    text("Mark", 480, 320);
     
-    pencil = new Button(100, 30, 475, 340, "", #458B86, #68AFB2, #156164, #C2CECE);
+    pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
     pencil.isOver();
     pencil.update();
     textSize(14);
     fill(255);
     textAlign(LEFT);
-    text("Pencil", 480, 360);
+    text("Pencil", 480, 370);
     
     //quit
     quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
