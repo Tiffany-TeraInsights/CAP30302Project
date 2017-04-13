@@ -5,7 +5,7 @@ class Board{
   int cellSize;
   
   
-  void drawBoard(){
+ void drawBoard(){
     stroke(0);
     fill(255, 255, 255, 190);
     rect(0,0,(width-150),height);
@@ -25,12 +25,14 @@ class Board{
     
   }
   
-    void showPencil(IntList pencil[][]) {
+  void showPencil(IntList pencil[][]) {
     textAlign(CENTER,CENTER);
     fill(#5EB791);
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {
-        if(pencil[i][j].get(0)==0) {
+        if(pencil[i][j].size()==0) {
+        }
+        else if(pencil[i][j].get(0)==0) {
         }
         else if (pencil[i][j].size()==1) {
           textSize(30);
@@ -46,13 +48,13 @@ class Board{
           text(pencil[i][j].get(0), j*cellSize+cellSize/2, i*cellSize+cellSize/3);
           text(pencil[i][j].get(1), j*cellSize+cellSize/3, i*cellSize+cellSize/3*2);
           text(pencil[i][j].get(2), j*cellSize+cellSize/3*2, i*cellSize+cellSize/3*2);
-       }
+        }
         else if (pencil[i][j].size()==4) {
           textSize(20);
           text(pencil[i][j].get(0), j*cellSize+cellSize/3, i*cellSize+cellSize/3);
           text(pencil[i][j].get(1), j*cellSize+cellSize/3*2, i*cellSize+cellSize/3);
           text(pencil[i][j].get(2), j*cellSize+cellSize/3, i*cellSize+cellSize/3*2);
-          text(pencil[i][j].get(3), j*cellSize+cellSize/3*2, i*cellSize+cellSize/3*2);        
+          text(pencil[i][j].get(3), j*cellSize+cellSize/3*2, i*cellSize+cellSize/3*2);         
         }
         else if (pencil[i][j].size()==5) {
           textSize(18);
@@ -60,21 +62,21 @@ class Board{
           text(pencil[i][j].get(1), j*cellSize+cellSize/3*2, i*cellSize+cellSize/3);
           text(pencil[i][j].get(2), j*cellSize+cellSize/4, i*cellSize+cellSize/3*2);
           text(pencil[i][j].get(3), j*cellSize+cellSize/2, i*cellSize+cellSize/3*2);
-          text(pencil[i][j].get(4), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3*2);        
+          text(pencil[i][j].get(4), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3*2);         
         }
         else if (pencil[i][j].size()==6) {
           textSize(18);
           text(pencil[i][j].get(0), j*cellSize+cellSize/4, i*cellSize+cellSize/3);
           text(pencil[i][j].get(1), j*cellSize+cellSize/2, i*cellSize+cellSize/3);
-          text(pencil[i][j].get(2), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3);        
+          text(pencil[i][j].get(2), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3);         
           text(pencil[i][j].get(3), j*cellSize+cellSize/4, i*cellSize+cellSize/3*2);
           text(pencil[i][j].get(4), j*cellSize+cellSize/2, i*cellSize+cellSize/3*2);
-          text(pencil[i][j].get(5), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3*2);        
+          text(pencil[i][j].get(5), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3*2);         
         }
       }
     }
   }
-  
+          
   void showNumbers(int puzzle[][]){
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {
@@ -106,30 +108,24 @@ class Board{
     }
   }
   
-  
   int boxNumber(){
     int colNum = mouseX/cellSize;
     int rowNum = mouseY/cellSize;
     return ((colNum) + (9 * (rowNum)));
   }
   
-  void drawInBox(){
-    int colNum = mouseX/cellSize;
-    int rowNum = mouseY/cellSize;
-    fill(0);
-    stroke(0);
-    rect(colNum*cellSize,rowNum*cellSize,cellSize,cellSize);
-  }
-  
   void drawCursor(int xMouse, int yMouse) {
+    stroke(255,0,0);
+    strokeWeight(2);
+    noFill();
     int colNum = xMouse/cellSize;
     int rowNum = yMouse/cellSize;
-    int x = colNum*cellSize + 10;
-    int y = (rowNum+1)*cellSize - 10;
-
-  line(x, y, x+cellSize-20, y);
-}
+    int x = colNum*cellSize;
+    int y = rowNum*cellSize;
+    rect(x, y, cellSize, cellSize);
+  }
     
+  
   Board(){
   }
   
