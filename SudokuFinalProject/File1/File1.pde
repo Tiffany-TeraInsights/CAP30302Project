@@ -8,6 +8,7 @@ gameState is used to dictate what "page" of the game we are on.
 */
 int gameState = 0;
 int difficulty;
+int mode=1;
 int x;
 int y;
 int box;
@@ -20,6 +21,7 @@ Button quit;
 Button activateHint;
 Timer Time;
 Puzzle puzzle;
+PencilIn pencilIn;
 boolean inputMode = false;
 int powerBarStrength = 105; //Beginning value for power bar.
 minigame fortuneWheel = new minigame(90);
@@ -34,6 +36,7 @@ void setup(){
   //frameRate = 1;
   Time = new Timer();
   puzzle=new Puzzle();
+  pencilIn=new PencilIn(puzzle.p);
 }
 
 void draw(){
@@ -57,18 +60,19 @@ void draw(){
     B4.update();
   }
   else if(gameState == 1) //Sudoku Puzzle.
-  {
-    //Keep background color the same.
-    background(#B87E3E);
+  { //<>//
+    //Keep background color the same. //<>//
+    background(#B87E3E); //<>//
     
-    // Realistic Bamboo Background.
-    //Draw Sudoku Background
+    // Realistic Bamboo Background. //<>//
+    //Draw Sudoku Background //<>//
     PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg");
     image(mainWoodBackground, 0, 0);
      //<>//
     sudokuBoard = new Board(); //<>// //<>//
     sudokuBoard.drawBoard(); //<>// //<>//
     sudokuBoard.showNumbers(puzzle.p);
+    sudokuBoard.showPencil(pencilIn.pencil);
     if (boxSelected) { //<>//
       sudokuBoard.drawCursor(x,y); //<>//
     }
@@ -314,12 +318,18 @@ void keyTyped() {
     else if (key=='9') {
       input=9;
     }
-    if(sudokuBoard.checkInput(input, box, puzzle.solved)) {
-      puzzle.p[box/9][box%9]=input;
-      boxSelected=false;
+    if (mode==0) {
+      if(sudokuBoard.checkInput(input, box, puzzle.solved)) {
+        puzzle.p[box/9][box%9]=input;
+        pencilIn.update(puzzle.p);
+        boxSelected=false;
+      }
+      else {
+        //ERROR YOU FUCKING SUCK AT THIS GAME
+      }
     }
-    else {
-      //ERROR YOU FUCKING SUCK AT THIS GAME
+    else if (mode==1) {
+      pencilIn.modify(input, box);
     }
   }
 }
