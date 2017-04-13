@@ -18,7 +18,8 @@ Board sudokuBoard;
 Button wheelGame;
 Timer Time;
 Puzzle puzzle;
-boolean inputMode = false;
+Points points;
+Errors errors;
 int powerBarStrength = 105; //Beginning value for power bar.
 minigame fortuneWheel = new minigame(90);
 boolean oneSpin = true;
@@ -32,6 +33,8 @@ void setup(){
   //frameRate = 1;
   Time = new Timer();
   puzzle=new Puzzle();
+  points = new Points();
+  errors = new Errors();
 }
 
 void draw(){
@@ -55,14 +58,14 @@ void draw(){
     B4.update();
   }
   else if(gameState == 1) //Sudoku Puzzle.
-  {
-    //Keep background color the same.
-    background(#B87E3E);
+  { //<>//
+    //Keep background color the same. //<>//
+    background(#B87E3E); //<>//
     
     // Realistic Bamboo Background.
     //Draw Sudoku Background
-    PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg");
-    image(mainWoodBackground, 0, 0);
+    PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg"); //<>//
+    image(mainWoodBackground, 0, 0); //<>//
      //<>//
     sudokuBoard = new Board(); //<>// //<>//
     sudokuBoard.drawBoard(); //<>// //<>//
@@ -89,6 +92,12 @@ void draw(){
     Time.advance();
     textSize(20);
     text(Time.hour() + ":" + Time.minute() + ":" + Time.second(), 500,100);
+    
+    text("Points" + "\n" + points.returnPoints(), 510,170);
+    
+    text("Errors" + "\n" + errors.returnErrors(), 510,240);
+    
+    
     
     //Cartoony Menu
     /*
@@ -273,6 +282,7 @@ void keyTyped() {
     }
     if(sudokuBoard.checkInput(input, box, puzzle.solved)) {
       puzzle.p[box/9][box%9]=input;
+      points.increaseP(10);
       boxSelected=false;
     }
     else {
