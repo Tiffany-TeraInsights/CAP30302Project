@@ -25,6 +25,56 @@ class Board{
     
   }
   
+    void showPencil(IntList pencil[][]) {
+    textAlign(CENTER,CENTER);
+    fill(#5EB791);
+    for (int i=0; i<9; i++) {
+      for (int j=0; j<9; j++) {
+        if(pencil[i][j].get(0)==0) {
+        }
+        else if (pencil[i][j].size()==1) {
+          textSize(30);
+          text(pencil[i][j].get(0), j*cellSize+cellSize/2, i*cellSize+cellSize/2);
+        }
+        else if (pencil[i][j].size()==2) {
+          textSize(25);
+          text(pencil[i][j].get(0), j*cellSize+cellSize/3, i*cellSize+cellSize/2);
+          text(pencil[i][j].get(1), j*cellSize+cellSize/3*2, i*cellSize+cellSize/2);
+        }
+        else if (pencil[i][j].size()==3) {
+          textSize(20);
+          text(pencil[i][j].get(0), j*cellSize+cellSize/2, i*cellSize+cellSize/3);
+          text(pencil[i][j].get(1), j*cellSize+cellSize/3, i*cellSize+cellSize/3*2);
+          text(pencil[i][j].get(2), j*cellSize+cellSize/3*2, i*cellSize+cellSize/3*2);
+       }
+        else if (pencil[i][j].size()==4) {
+          textSize(20);
+          text(pencil[i][j].get(0), j*cellSize+cellSize/3, i*cellSize+cellSize/3);
+          text(pencil[i][j].get(1), j*cellSize+cellSize/3*2, i*cellSize+cellSize/3);
+          text(pencil[i][j].get(2), j*cellSize+cellSize/3, i*cellSize+cellSize/3*2);
+          text(pencil[i][j].get(3), j*cellSize+cellSize/3*2, i*cellSize+cellSize/3*2);        
+        }
+        else if (pencil[i][j].size()==5) {
+          textSize(18);
+          text(pencil[i][j].get(0), j*cellSize+cellSize/3, i*cellSize+cellSize/3);
+          text(pencil[i][j].get(1), j*cellSize+cellSize/3*2, i*cellSize+cellSize/3);
+          text(pencil[i][j].get(2), j*cellSize+cellSize/4, i*cellSize+cellSize/3*2);
+          text(pencil[i][j].get(3), j*cellSize+cellSize/2, i*cellSize+cellSize/3*2);
+          text(pencil[i][j].get(4), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3*2);        
+        }
+        else if (pencil[i][j].size()==6) {
+          textSize(18);
+          text(pencil[i][j].get(0), j*cellSize+cellSize/4, i*cellSize+cellSize/3);
+          text(pencil[i][j].get(1), j*cellSize+cellSize/2, i*cellSize+cellSize/3);
+          text(pencil[i][j].get(2), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3);        
+          text(pencil[i][j].get(3), j*cellSize+cellSize/4, i*cellSize+cellSize/3*2);
+          text(pencil[i][j].get(4), j*cellSize+cellSize/2, i*cellSize+cellSize/3*2);
+          text(pencil[i][j].get(5), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3*2);        
+        }
+      }
+    }
+  }
+  
   void showNumbers(int puzzle[][]){
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {
