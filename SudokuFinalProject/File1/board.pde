@@ -52,7 +52,6 @@ class Board{
       return true;
     }
     else {
-      println("YOU BROKE IT");
       return false;
     }
   }

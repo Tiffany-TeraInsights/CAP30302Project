@@ -28,6 +28,9 @@ boolean oneSpin = true;
 boolean checkRewardOnce = true;
 Button returnSudoku;
 String gambleReward = "";
+Button pencil;
+Button mark;
+int mode = 0;
 
 void setup(){
   size(600,450);
@@ -55,15 +58,14 @@ void draw(){
     
     //Update buttons
     B3.update();
-    B4.update();
-    
-    System.out.println(B3.over);
-  } //<>// //<>//
+    B4.update(); //<>//
+ //<>//
+  } //<>// //<>// //<>//
   else if(gameState == 1) //Sudoku Puzzle. //<>// //<>//
   { //<>// //<>// //<>//
     //Keep background color the same. //<>//
-    background(#B87E3E); //<>//
-    
+    background(#B87E3E); //<>// //<>//
+     //<>//
     // Realistic Bamboo Background. //<>// //<>//
     //Draw Sudoku Background //<>// //<>//
     PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg"); //<>//
@@ -88,28 +90,54 @@ void draw(){
     
     rectMode(CORNER);
 
-    wheelGame = new Button(100, 30, 475, 250, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+    wheelGame = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
+    wheelGame.isOver();
     wheelGame.update();
     textSize(14);
-    fill(50);
+    fill(255);
     textAlign(LEFT);
 
     activateHint = new Button(100, 30, 475, 300, "", #B4EBED, #68AFB2, #156164, #C2CECE);
     text("Mini Game", 480, 250);
-    
+
     //activateHint
+    activateHint.isOver();
+
     activateHint.update();
     textSize(14);
-    fill(50);
+    fill(255);
     textAlign(LEFT);
 
     text("Hint", 480, 300);
 
     //quit
     quit = new Button(100, 30, 475, 400, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+
+    text("Hint", 480, 320);
+    
+    mark = new Button(100, 30, 475, 340, "", #458B86, #68AFB2, #156164, #C2CECE);
+    mark.isOver();
+    mark.update();
+    textSize(14);
+    fill(255);
+    textAlign(LEFT);
+    text("Mark", 480, 360);
+    
+    pencil = new Button(100, 30, 475, 340, "", #458B86, #68AFB2, #156164, #C2CECE);
+    pencil.isOver();
+    pencil.update();
+    textSize(14);
+    fill(255);
+    textAlign(LEFT);
+    text("Pencil", 480, 360);
+    
+    //quit
+    quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
+    quit.isOver();
+
     quit.update();
     textSize(14);
-    fill(50);
+    fill(255);
     textAlign(LEFT);
     text("Quit", 480, 420);
     
@@ -209,6 +237,8 @@ void mouseClicked()
     wheelGame.isOver();
     activateHint.isOver();
     quit.isOver();
+    pencil.isOver();
+    mark.isOver();
     if(wheelGame.over) //If the mouse is over the button.
     {
       gameState = 2; //Move Us to Mini Game State.
@@ -220,6 +250,14 @@ void mouseClicked()
     else if(quit.over)
     {
       gameState = 0;
+    }
+    else if(mark.over)
+    {
+      mode = 0;
+    }
+    else if(pencil.over)
+    {
+      mode = 1;
     }
     
     
@@ -249,6 +287,10 @@ void mouseClicked()
       checkRewardOnce = true;
       fortuneWheel.resetValues();
     }
+  }
+  else if(gameState == 3){
+    PImage loseBackground = loadImage("youjustlost.jpg");
+    image(loseBackground, 450, -180);
   }
 }
 
@@ -326,6 +368,10 @@ void keyTyped() {
       boxSelected=false;
     }
     else {
+      errors.decreaseE();
+      if(errors.returnErrors() == 0){
+        gameState = 3;
+      }
       //ERROR YOU FUCKING SUCK AT THIS GAME
     }
   }
