@@ -18,6 +18,7 @@ Button B4;
 Board sudokuBoard;
 Button wheelGame;
 Button quit;
+Button quit2;
 Button activateHint;
 Timer Time;
 Puzzle puzzle;
@@ -57,14 +58,14 @@ void draw(){
     image(image,width/4,height/8);
     
     //CREATE BUTTONS
-    B3 = new Button(200,70,90,365,"Easy", #1CE86F, #1EBC5E, #1B7941, #FCFFFD);
-    B4 = new Button(200,70,310,365,"Hard", #D33526, #BF3023, #933128, #FCFFFD);
-    
+    B3 = new Button(200,70,90,365,"Easy", #1CE86F, #1EBC5E, #1B7941, #FCFFFD); //<>//
+    B4 = new Button(200,70,310,365,"Hard", #D33526, #BF3023, #933128, #FCFFFD); //<>//
+     //<>//
     //Update buttons
     B3.update();
     B4.update(); //<>//
- //<>//
-  } //<>// //<>// //<>//
+ //<>// //<>//
+  } //<>// //<>// //<>// //<>//
   else if(gameState == 1) //Sudoku Puzzle. //<>// //<>//
   { //<>// //<>// //<>//
     //Keep background color the same. //<>//
@@ -287,8 +288,22 @@ void mouseClicked()
     }
   }
   else if(gameState == 3){
+    background(0);
     PImage loseBackground = loadImage("youjustlost.jpg");
-    image(loseBackground, 450, -180);
+    image(loseBackground, 100, 25);
+    
+    quit2 = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
+    quit2.isOver();
+
+    quit2.update();
+    textSize(14);
+    fill(255);
+    textAlign(LEFT);
+    text("Quit", 480, 420);
+    
+    if(quit2.over){
+      gameState = 0; 
+    }
   }
 }
 
