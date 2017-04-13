@@ -29,7 +29,7 @@ Button returnSudoku;
 String gambleReward = "";
 
 void setup(){
-  size(600,600);
+  size(600,450);
   background(#B87E3E);
   //frameRate = 1;
   Time = new Timer();
@@ -47,8 +47,8 @@ void draw(){
     image(image,width/4,height/8);
     
     //CREATE BUTTONS
-    B3 = new Button(200,70,90,500,"Easy", #1CE86F, #1EBC5E, #1B7941, #FCFFFD);
-    B4 = new Button(200,70,310,500,"Hard", #D33526, #BF3023, #933128, #FCFFFD);
+    B3 = new Button(200,70,90,365,"Easy", #1CE86F, #1EBC5E, #1B7941, #FCFFFD);
+    B4 = new Button(200,70,310,365,"Hard", #D33526, #BF3023, #933128, #FCFFFD);
     
     //Update buttons
     B3.isOver();
@@ -84,31 +84,31 @@ void draw(){
     image(sideMenuBackground, 450, -180);
     
     rectMode(CORNER);
-    wheelGame = new Button(100, 30, 475, 200, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+    wheelGame = new Button(100, 30, 475, 250, "", #B4EBED, #68AFB2, #156164, #C2CECE);
     wheelGame.isOver();
     wheelGame.update();
     textSize(14);
     fill(50);
     textAlign(LEFT);
-    text("Mini Game", 480, 220);
+    text("Mini Game", 480, 270);
     
     //activateHint
-    activateHint = new Button(100, 30, 475, 250, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+    activateHint = new Button(100, 30, 475, 300, "", #B4EBED, #68AFB2, #156164, #C2CECE);
     activateHint.isOver();
     activateHint.update();
     textSize(14);
     fill(50);
     textAlign(LEFT);
-    text("Hint", 480, 270);
+    text("Hint", 480, 320);
     
     //quit
-    quit = new Button(100, 30, 475, 500, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+    quit = new Button(100, 30, 475, 400, "", #B4EBED, #68AFB2, #156164, #C2CECE);
     quit.isOver();
     quit.update();
     textSize(14);
     fill(50);
     textAlign(LEFT);
-    text("Quit", 480, 520);
+    text("Quit", 480, 420);
     
     Time.advance();
     textSize(20);
