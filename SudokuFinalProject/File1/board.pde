@@ -10,7 +10,7 @@ class Board{
     fill(255, 255, 255, 190);
     rect(0,0,width-150,height-150);
     cellSize = ((width - 150))/size;
-    for (int i=0; i<9; i++) {
+    for (int i=0; i<10; i++) {
     // change stroke weight
     if (i%3 == 0)
       strokeWeight(3);
@@ -25,8 +25,17 @@ class Board{
     
   }
   
-  void showNumbers(){
-    
+  void showNumbers(int puzzle[][]){
+    for (int i=0; i<9; i++) {
+      for (int j=0; j<9; j++) {
+        textAlign(CENTER,CENTER);
+        textSize(35);
+        fill(0);
+        if (puzzle[i][j]!=0) {
+          text(puzzle[i][j], j*cellSize+cellSize/2, i*cellSize+cellSize/2);
+        }
+      }
+    }
   }
   
   boolean overSudokuBoard(){
@@ -37,6 +46,17 @@ class Board{
     }
     return false;
   }
+  
+  boolean checkInput(int input, int box, int solution[][]) {
+    if(solution[box/9][box%9]==input) {
+      return true;
+    }
+    else {
+      println("YOU BROKE IT");
+      return false;
+    }
+  }
+  
   
   int boxNumber(){
     int colNum = mouseX/cellSize;
@@ -52,9 +72,9 @@ class Board{
     rect(colNum*cellSize,rowNum*cellSize,cellSize,cellSize);
   }
   
-  void drawCursor() {
-    int colNum = mouseX/cellSize;
-    int rowNum = mouseY/cellSize;
+  void drawCursor(int xMouse, int yMouse) {
+    int colNum = xMouse/cellSize;
+    int rowNum = yMouse/cellSize;
     int x = colNum*cellSize + 10;
     int y = (rowNum+1)*cellSize - 10;
 
