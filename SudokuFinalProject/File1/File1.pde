@@ -54,18 +54,18 @@ void draw(){
     B4 = new Button(200,70,310,365,"Hard", #D33526, #BF3023, #933128, #FCFFFD);
     
     //Update buttons
-    B3.isOver();
-    B4.isOver();
     B3.update();
     B4.update();
-  } //<>//
-  else if(gameState == 1) //Sudoku Puzzle. //<>//
-  { //<>// //<>//
+    
+    System.out.println(B3.over);
+  } //<>// //<>//
+  else if(gameState == 1) //Sudoku Puzzle. //<>// //<>//
+  { //<>// //<>// //<>//
     //Keep background color the same. //<>//
     background(#B87E3E); //<>//
     
-    // Realistic Bamboo Background. //<>//
-    //Draw Sudoku Background //<>//
+    // Realistic Bamboo Background. //<>// //<>//
+    //Draw Sudoku Background //<>// //<>//
     PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg"); //<>//
     image(mainWoodBackground, 0, 0); //<>//
      //<>//
@@ -87,41 +87,26 @@ void draw(){
     image(sideMenuBackground, 450, -180);
     
     rectMode(CORNER);
-<<<<<<< HEAD
+
     wheelGame = new Button(100, 30, 475, 250, "", #B4EBED, #68AFB2, #156164, #C2CECE);
-=======
-    wheelGame = new Button(100, 30, 475, 230, "", #B4EBED, #68AFB2, #156164, #C2CECE);
->>>>>>> cf5651d74e505cee3402b38d91c1609f15694e6c
-    wheelGame.isOver();
     wheelGame.update();
     textSize(14);
     fill(50);
     textAlign(LEFT);
-<<<<<<< HEAD
-    text("Mini Game", 480, 270);
-    
-    //activateHint
+
     activateHint = new Button(100, 30, 475, 300, "", #B4EBED, #68AFB2, #156164, #C2CECE);
-=======
     text("Mini Game", 480, 250);
     
     //activateHint
-    activateHint = new Button(100, 30, 475, 280, "", #B4EBED, #68AFB2, #156164, #C2CECE);
->>>>>>> cf5651d74e505cee3402b38d91c1609f15694e6c
-    activateHint.isOver();
     activateHint.update();
     textSize(14);
     fill(50);
     textAlign(LEFT);
-<<<<<<< HEAD
-    text("Hint", 480, 320);
-=======
+
     text("Hint", 480, 300);
->>>>>>> cf5651d74e505cee3402b38d91c1609f15694e6c
-    
+
     //quit
     quit = new Button(100, 30, 475, 400, "", #B4EBED, #68AFB2, #156164, #C2CECE);
-    quit.isOver();
     quit.update();
     textSize(14);
     fill(50);
