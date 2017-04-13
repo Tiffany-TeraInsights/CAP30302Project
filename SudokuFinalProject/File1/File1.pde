@@ -6,6 +6,7 @@ gameState is used to dictate what "page" of the game we are on.
 1 is Sudoku Game
 2 is Mini Game
 */
+import processing.sound.*;
 int gameState = 0;
 int difficulty;
 int x;
@@ -31,6 +32,7 @@ String gambleReward = "";
 Button pencil;
 Button mark;
 int mode = 0;
+SoundFile backgroundMusic;
 
 void setup(){
   size(600,450);
@@ -40,6 +42,8 @@ void setup(){
   puzzle=new Puzzle();
   points = new Points();
   errors = new Errors();
+  backgroundMusic = new SoundFile(this, "background music.mp3");
+  backgroundMusic.loop();
 }
 
 void draw(){
