@@ -175,14 +175,14 @@ void mouseClicked()
     }
     
     if(sudokuBoard.overSudokuBoard() == true){
-       if (!boxSelected) {
+       //if (!boxSelected) {
          box=sudokuBoard.boxNumber();
          if (puzzle.p[box/9][box%9]==0) {
            boxSelected=true;
            x=mouseX;
            y=mouseY;
          }
-       }
+       //}
     }
     else {
       boxSelected=false;
