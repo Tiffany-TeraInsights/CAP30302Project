@@ -7,7 +7,11 @@ gameState is used to dictate what "page" of the game we are on.
 2 is Mini Game
 */
 int gameState = 0;
-String difficulty = "";
+int difficulty;
+int x;
+int y;
+int box;
+boolean boxSelected=false;
 Button B3;
 Button B4;
 Board sudokuBoard;
@@ -16,7 +20,6 @@ Button quit;
 Button activateHint;
 Timer Time;
 Puzzle puzzle;
-int[][] puzzleSolution;
 boolean inputMode = false;
 int powerBarStrength = 105; //Beginning value for power bar.
 minigame fortuneWheel = new minigame(90);
@@ -30,7 +33,7 @@ void setup(){
   background(#B87E3E);
   //frameRate = 1;
   Time = new Timer();
-  puzzle=new Puzzle(0);
+  puzzle=new Puzzle();
 }
 
 void draw(){
@@ -62,9 +65,13 @@ void draw(){
     //Draw Sudoku Background
     PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg");
     image(mainWoodBackground, 0, 0);
-    
-    sudokuBoard = new Board(); //<>//
-    sudokuBoard.drawBoard(); //<>//
+     //<>//
+    sudokuBoard = new Board(); //<>// //<>//
+    sudokuBoard.drawBoard(); //<>// //<>//
+    sudokuBoard.showNumbers(puzzle.p);
+    if (boxSelected) { //<>//
+      sudokuBoard.drawCursor(x,y); //<>//
+    }
     //<>//
     //Shadow of side menu
     fill(0);
@@ -123,14 +130,14 @@ void draw(){
     rect(450, 0, 600, 600);
     */
     
-    if(difficulty == "HARD") //If hard.
+    /*if(difficulty == 0)
     {
-      //Whatever Needs to Happen with Hard.
+      //puzzle.easy();
     }
-    else if(difficulty == "EASY") //If Easy
+    else if(difficulty == 1) 
     {
-      //Whatever Needs to Happen with Easy.
-    }
+      puzzle.hard();
+    }*/
   }
   else if(gameState == 2)
   {
@@ -173,13 +180,15 @@ void mouseClicked()
     B4.isOver();
     if(B3.over) //If mouse if over button
     {
+      difficulty=0;
+      puzzle.easy();
       gameState = 1; //Bring us to Sudoku.
-      difficulty = "EASY"; //Update difficulty
     }
     else if(B4.over) //If mouse is over button
     {
+      difficulty=1;
+      puzzle.hard();
       gameState = 1; //Bring us to Sudoku.
-      difficulty = "HARD"; //Update difficulty.
     }
     else
     {
@@ -206,7 +215,17 @@ void mouseClicked()
     
     
     if(sudokuBoard.overSudokuBoard() == true){
-       sudokuBoard.drawCursor();
+       //if (!boxSelected) {
+         box=sudokuBoard.boxNumber();
+         if (puzzle.p[box/9][box%9]==0) {
+           boxSelected=true;
+           x=mouseX;
+           y=mouseY;
+         }
+       //}
+    }
+    else {
+      boxSelected=false;
     }
   }
   else if(gameState == 2)
@@ -261,3 +280,45 @@ void keyReleased()
     }
   }
 }
+
+void keyTyped() {
+  if (boxSelected) {
+    int input=0;
+    if(key=='1') {
+      input=1;
+    }
+    else if(key=='2') {
+      input=2;
+    }
+    else if (key=='3') {
+      input=3;
+    }
+    else if (key=='4') {
+      input=4;
+    }
+    else if (key=='5') {
+      input=5;
+    }
+    else if (key=='6') {
+      input=6;
+    }
+    else if (key=='7') {
+      input=7;
+    }
+    else if (key=='8') {
+      input=8;
+    }
+    else if (key=='9') {
+      input=9;
+    }
+    if(sudokuBoard.checkInput(input, box, puzzle.solved)) {
+      puzzle.p[box/9][box%9]=input;
+      boxSelected=false;
+    }
+    else {
+      //ERROR YOU FUCKING SUCK AT THIS GAME
+    }
+  }
+}
+      
+      
