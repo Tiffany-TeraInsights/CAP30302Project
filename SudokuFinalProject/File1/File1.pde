@@ -28,6 +28,9 @@ boolean oneSpin = true;
 boolean checkRewardOnce = true;
 Button returnSudoku;
 String gambleReward = "";
+Button pencil;
+Button mark;
+int mode = 0;
 
 void setup(){
   size(600,450);
@@ -87,44 +90,45 @@ void draw(){
     image(sideMenuBackground, 450, -180);
     
     rectMode(CORNER);
-<<<<<<< HEAD
-    wheelGame = new Button(100, 30, 475, 250, "", #B4EBED, #68AFB2, #156164, #C2CECE);
-=======
-    wheelGame = new Button(100, 30, 475, 230, "", #B4EBED, #68AFB2, #156164, #C2CECE);
->>>>>>> cf5651d74e505cee3402b38d91c1609f15694e6c
+    wheelGame = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
     wheelGame.isOver();
     wheelGame.update();
     textSize(14);
-    fill(50);
+    fill(255);
     textAlign(LEFT);
-<<<<<<< HEAD
     text("Mini Game", 480, 270);
     
     //activateHint
-    activateHint = new Button(100, 30, 475, 300, "", #B4EBED, #68AFB2, #156164, #C2CECE);
-=======
-    text("Mini Game", 480, 250);
-    
-    //activateHint
-    activateHint = new Button(100, 30, 475, 280, "", #B4EBED, #68AFB2, #156164, #C2CECE);
->>>>>>> cf5651d74e505cee3402b38d91c1609f15694e6c
+    activateHint = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
     activateHint.isOver();
     activateHint.update();
     textSize(14);
-    fill(50);
+    fill(255);
     textAlign(LEFT);
-<<<<<<< HEAD
     text("Hint", 480, 320);
-=======
-    text("Hint", 480, 300);
->>>>>>> cf5651d74e505cee3402b38d91c1609f15694e6c
+    
+    mark = new Button(100, 30, 475, 340, "", #458B86, #68AFB2, #156164, #C2CECE);
+    mark.isOver();
+    mark.update();
+    textSize(14);
+    fill(255);
+    textAlign(LEFT);
+    text("Mark", 480, 360);
+    
+    pencil = new Button(100, 30, 475, 340, "", #458B86, #68AFB2, #156164, #C2CECE);
+    pencil.isOver();
+    pencil.update();
+    textSize(14);
+    fill(255);
+    textAlign(LEFT);
+    text("Pencil", 480, 360);
     
     //quit
-    quit = new Button(100, 30, 475, 400, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+    quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
     quit.isOver();
     quit.update();
     textSize(14);
-    fill(50);
+    fill(255);
     textAlign(LEFT);
     text("Quit", 480, 420);
     
@@ -224,6 +228,8 @@ void mouseClicked()
     wheelGame.isOver();
     activateHint.isOver();
     quit.isOver();
+    pencil.isOver();
+    mark.isOver();
     if(wheelGame.over) //If the mouse is over the button.
     {
       gameState = 2; //Move Us to Mini Game State.
@@ -235,6 +241,14 @@ void mouseClicked()
     else if(quit.over)
     {
       gameState = 0;
+    }
+    else if(mark.over)
+    {
+      mode = 0;
+    }
+    else if(pencil.over)
+    {
+      mode = 1;
     }
     
     

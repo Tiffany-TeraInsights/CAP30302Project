@@ -40,7 +40,7 @@ class Board{
   
   boolean overSudokuBoard(){
     if(mouseX > 0 && mouseX < (width-150)){
-      if(mouseY > 0 && mouseY < (height){
+      if(mouseY > 0 && mouseY < (height)){
        return true;   
       }
     }
