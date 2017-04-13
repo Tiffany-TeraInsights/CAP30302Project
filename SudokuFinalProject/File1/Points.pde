@@ -2,19 +2,19 @@ class Points {
   
   int totalPoints = 0;
   
-  void increase(int value){
+  void increaseP(int value){
     totalPoints += value;
   }
   
-  void double(){
+  void doubleP(){
     totalPoints *= 2; 
   }
   
-  void triple(){
+  void tripleP(){
     totalPoints *= 3; 
   }
   
-  void halve(){
+  void halveP(){
     totalPoints = (int)(totalPoints/2);
   }
   
