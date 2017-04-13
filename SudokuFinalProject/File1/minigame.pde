@@ -16,11 +16,23 @@ class minigame
   {
     float rewardNum = spinPower;
     String reward = "";
-    if(rewardNum <= PI / 2)
+    if(rewardNum <= PI / 4)
+    {
+      reward = "TEAL";
+    }
+    else if(rewardNum <= PI / 2)
+    {
+      reward = "MAGENTA";
+    }
+    else if(rewardNum <= (3 * PI)/4)
+    {
+      reward = "ORANGE";
+    }
+    else if(rewardNum <= PI)
     {
       reward = "BLUE";
     }
-    else if(rewardNum <= PI)
+    else if(rewardNum <= (5 * PI)/4)
     {
       reward = "RED";
     }
@@ -28,9 +40,13 @@ class minigame
     {
       reward = "GREEN";
     }
+    else if(rewardNum <= (7 * PI)/4)
+    {
+      reward = "PURPLE";
+    }
     else if(rewardNum <= 2 * PI)
     {
-      reward = "TEAL";
+      reward = "LIME";
     }
     return reward;
   }
@@ -52,7 +68,7 @@ class minigame
      if(activeSpin && spinPower >= radians(360))
      {
        //Reduce the value of the rotation and spin.
-       spinPower = spinPower - 10.767566767534232;
+       spinPower = spinPower - 7.767566767534232;
      }
      else if(activeSpin && spinPower < radians(360)) //If the wheel is done spinning
      {
@@ -100,5 +116,11 @@ class minigame
     {
       return false;
     }
+  }
+  
+  void resetValues()
+  {
+    spinPower = 0;
+    activeSpin = false;
   }
 }

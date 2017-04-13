@@ -16,6 +16,9 @@ Timer Time;
 int powerBarStrength = 105; //Beginning value for power bar.
 minigame fortuneWheel = new minigame(90);
 boolean oneSpin = true;
+boolean checkRewardOnce = true;
+Button returnSudoku;
+String gambleReward = "";
 
 void setup(){
   size(600,600);
@@ -97,9 +100,30 @@ void draw(){
   else if(gameState == 2)
   {
     fortuneWheel.display();
-    if(fortuneWheel.doneSpinning())
+    
+    rectMode(CORNER);
+    returnSudoku = new Button(100, 50, 250, 400, "Return", #E56E1E, #863A07, #FC8608, #0F0F0E);
+    if(fortuneWheel.doneSpinning() && checkRewardOnce)
     {
-      println(fortuneWheel.getReward());
+      gambleReward = fortuneWheel.getReward();
+      checkRewardOnce = false;
+      
+      /* Colors
+      Teal = 2x Score
+      Magenta = 3x Score
+      Orange = Reduce Hint Cost
+      Blue = +1 Error
+      Red = Half Score
+      Green = No Points
+      Purple = 2x Hint Cost
+      Lime = Bring Errors to One.
+      */
+    }
+    
+    if(fortuneWheel.doneSpinning() && checkRewardOnce == false)
+    {
+      returnSudoku.isOver();
+      returnSudoku.update();
     }
   }
 }
@@ -131,6 +155,19 @@ void mouseClicked()
     if(wheelGame.over) //If the mouse is over the button.
     {
       gameState = 2; //Move Us to Mini Game State.
+    }
+  }
+  else if(gameState == 2)
+  {
+    returnSudoku.isOver();
+    if(returnSudoku.over)
+    {
+      gameState = 1;
+      
+      //Reset all of minigame.
+      oneSpin = true;
+      checkRewardOnce = true;
+      fortuneWheel.resetValues();
     }
   }
 }

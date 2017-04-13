@@ -22,24 +22,40 @@ class spinner
     ellipse(0, 0, size + 11, size + 11);
     
     //Full circle
-    fill(255, 0, 255);
+    fill(0);
     ellipse(0, 0, size, size);
     
     //Part One
-    fill(0, 255, 0);
-    arc(0, 0, size, size, 0, PI/2);
+    fill(0, 255, 0); //Green
+    arc(0, 0, size, size, 0, PI/4);
     
     //Part Two
-    fill(255, 0, 0);
-    arc(0, 0, size, size, PI/2, PI);
+    fill(255, 0, 0); //Red
+    arc(0, 0, size, size, PI/4, PI/2);
     
     //Part Three
-    fill(0, 0, 255);
-    arc(0, 0, size, size, PI, (3 * PI)/2);
+    fill(0, 0, 255); //Blue
+    arc(0, 0, size, size, PI/2, (3 * PI)/4);
     
     //Part Four
-    fill(0, 255, 255);
-    arc(0, 0, size, size, (3 * PI)/2, 2 * PI);
+    fill(#FF8503); //oRANGE
+    arc(0, 0, size, size, (3 * PI)/4, PI);
+    
+    //Part Five
+    fill(#FC007A); //Magenta
+    arc(0, 0, size, size, PI, (5 * PI)/4);
+    
+    //Part Six
+    fill(#00E9FC); //Teal
+    arc(0, 0, size, size, (5 * PI)/4, (3 * PI)/2);
+    
+    //Part Seven
+    fill(#96FC00); //Lime
+    arc(0, 0, size, size, (3 * PI)/2, (7 * PI)/4);
+    
+    //Part Eight
+    fill(#9B00FC); //Purple
+    arc(0, 0, size, size, (7 * PI)/4, 2 * PI);
     
     popMatrix(); //Revert Rotation.
     
