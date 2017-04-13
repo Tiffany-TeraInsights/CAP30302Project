@@ -87,22 +87,22 @@ void draw(){
     image(sideMenuBackground, 450, -180);
     
     rectMode(CORNER);
-    wheelGame = new Button(100, 30, 475, 200, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+    wheelGame = new Button(100, 30, 475, 230, "", #B4EBED, #68AFB2, #156164, #C2CECE);
     wheelGame.isOver();
     wheelGame.update();
     textSize(14);
     fill(50);
     textAlign(LEFT);
-    text("Mini Game", 480, 220);
+    text("Mini Game", 480, 250);
     
     //activateHint
-    activateHint = new Button(100, 30, 475, 250, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+    activateHint = new Button(100, 30, 475, 280, "", #B4EBED, #68AFB2, #156164, #C2CECE);
     activateHint.isOver();
     activateHint.update();
     textSize(14);
     fill(50);
     textAlign(LEFT);
-    text("Hint", 480, 270);
+    text("Hint", 480, 300);
     
     //quit
     quit = new Button(100, 30, 475, 500, "", #B4EBED, #68AFB2, #156164, #C2CECE);
@@ -118,14 +118,12 @@ void draw(){
     fill(255);
     text(Time.hour() + ":" + Time.minute() + ":" + Time.second(), 500,100);
     
-    text("Points" + "\n" + points.returnPoints(), 510,170);
-    
-    text("Errors" + "\n" + errors.returnErrors(), 510,240);
     
     //Score
     textSize(16);
     fill(255);
-    text("Score: ", 460, 150);
+    text("Score: " + points.returnPoints(), 460, 150);
+    text("Errors: " + errors.returnErrors(), 460, 180);
 
     
     //Cartoony Menu
