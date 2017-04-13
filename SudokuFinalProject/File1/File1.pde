@@ -89,6 +89,7 @@ void draw(){
     wheelGame.update();
     textSize(14);
     fill(50);
+    textAlign(LEFT);
     text("Mini Game", 480, 220);
     
     //activateHint
@@ -97,6 +98,7 @@ void draw(){
     activateHint.update();
     textSize(14);
     fill(50);
+    textAlign(LEFT);
     text("Hint", 480, 270);
     
     //quit
@@ -105,6 +107,7 @@ void draw(){
     quit.update();
     textSize(14);
     fill(50);
+    textAlign(LEFT);
     text("Quit", 480, 520);
     
     Time.advance();
@@ -113,9 +116,9 @@ void draw(){
     text(Time.hour() + ":" + Time.minute() + ":" + Time.second(), 500,100);
     
     //Score
-    textSize(20);
+    textSize(16);
     fill(255);
-    text("Score: ", 500, 150);
+    text("Score: ", 460, 150);
     
     //Cartoony Menu
     /*
