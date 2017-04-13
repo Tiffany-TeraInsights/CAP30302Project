@@ -20,7 +20,8 @@ Button quit;
 Button activateHint;
 Timer Time;
 Puzzle puzzle;
-boolean inputMode = false;
+Points points;
+Errors errors;
 int powerBarStrength = 105; //Beginning value for power bar.
 minigame fortuneWheel = new minigame(90);
 boolean oneSpin = true;
@@ -34,6 +35,8 @@ void setup(){
   //frameRate = 1;
   Time = new Timer();
   puzzle=new Puzzle();
+  points = new Points();
+  errors = new Errors();
 }
 
 void draw(){
@@ -55,16 +58,16 @@ void draw(){
     B4.isOver();
     B3.update();
     B4.update();
-  }
-  else if(gameState == 1) //Sudoku Puzzle.
-  {
-    //Keep background color the same.
-    background(#B87E3E);
+  } //<>//
+  else if(gameState == 1) //Sudoku Puzzle. //<>//
+  { //<>// //<>//
+    //Keep background color the same. //<>//
+    background(#B87E3E); //<>//
     
-    // Realistic Bamboo Background.
-    //Draw Sudoku Background
-    PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg");
-    image(mainWoodBackground, 0, 0);
+    // Realistic Bamboo Background. //<>//
+    //Draw Sudoku Background //<>//
+    PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg"); //<>//
+    image(mainWoodBackground, 0, 0); //<>//
      //<>//
     sudokuBoard = new Board(); //<>// //<>//
     sudokuBoard.drawBoard(); //<>// //<>//
@@ -84,22 +87,37 @@ void draw(){
     image(sideMenuBackground, 450, -180);
     
     rectMode(CORNER);
+<<<<<<< HEAD
     wheelGame = new Button(100, 30, 475, 250, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+=======
+    wheelGame = new Button(100, 30, 475, 230, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+>>>>>>> cf5651d74e505cee3402b38d91c1609f15694e6c
     wheelGame.isOver();
     wheelGame.update();
     textSize(14);
     fill(50);
     textAlign(LEFT);
+<<<<<<< HEAD
     text("Mini Game", 480, 270);
     
     //activateHint
     activateHint = new Button(100, 30, 475, 300, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+=======
+    text("Mini Game", 480, 250);
+    
+    //activateHint
+    activateHint = new Button(100, 30, 475, 280, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+>>>>>>> cf5651d74e505cee3402b38d91c1609f15694e6c
     activateHint.isOver();
     activateHint.update();
     textSize(14);
     fill(50);
     textAlign(LEFT);
+<<<<<<< HEAD
     text("Hint", 480, 320);
+=======
+    text("Hint", 480, 300);
+>>>>>>> cf5651d74e505cee3402b38d91c1609f15694e6c
     
     //quit
     quit = new Button(100, 30, 475, 400, "", #B4EBED, #68AFB2, #156164, #C2CECE);
@@ -115,10 +133,13 @@ void draw(){
     fill(255);
     text(Time.hour() + ":" + Time.minute() + ":" + Time.second(), 500,100);
     
+    
     //Score
     textSize(16);
     fill(255);
-    text("Score: ", 460, 150);
+    text("Score: " + points.returnPoints(), 460, 150);
+    text("Errors: " + errors.returnErrors(), 460, 180);
+
     
     //Cartoony Menu
     /*
@@ -316,6 +337,7 @@ void keyTyped() {
     }
     if(sudokuBoard.checkInput(input, box, puzzle.solved)) {
       puzzle.p[box/9][box%9]=input;
+      points.increaseP(10);
       boxSelected=false;
     }
     else {

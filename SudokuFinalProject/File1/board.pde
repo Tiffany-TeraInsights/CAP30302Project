@@ -8,19 +8,19 @@ class Board{
   void drawBoard(){
     stroke(0);
     fill(255, 255, 255, 190);
-    rect(0,0,width-150,height-150);
-    cellSize = ((width - 150))/size;
+    rect(0,0,(width-150),height);
+    cellSize = ((width-150))/size;
     for (int i=0; i<10; i++) {
     // change stroke weight
     if (i%3 == 0)
       strokeWeight(3);
     else
       strokeWeight(1);
-    line(i*cellSize, 0, i*cellSize, (height-150));
-    line(0, i*cellSize, (width - 150), i*cellSize);
+    line(i*cellSize, 0, i*cellSize, (height));
+    line(0, i*cellSize, (width-150), i*cellSize);
   }
   strokeWeight(3);
-  line(width-2, 0, width-2, (height-150));
+  line(width-2, 0, width-2, height);
   line(0, height-2, (width - 150), height-2);
     
   }
@@ -40,7 +40,7 @@ class Board{
   
   boolean overSudokuBoard(){
     if(mouseX > 0 && mouseX < (width-150)){
-      if(mouseY > 0 && mouseY < (height-150)){
+      if(mouseY > 0 && mouseY < (height){
        return true;   
       }
     }
