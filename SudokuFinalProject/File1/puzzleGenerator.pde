@@ -1,9 +1,10 @@
 class Puzzle {
   int p[][]=new int[9][9];
+  int solved[][]=new int[9][9];
   IntList nums=new IntList();
   int puzzleCopy[][] = new int[9][9];
   
-  Puzzle() {
+  Puzzle(int difficulty) {
     nums.append(1);
     nums.append(2);
     nums.append(3);
@@ -24,10 +25,17 @@ class Puzzle {
     }
     nums.sort();
     Boolean check=generateSolution(0,0);
-    //easy();
-    hard();
-    printArray();
-    printPuzzle();
+    if (difficulty==0) {
+      hard();
+    }
+    else {
+      easy();
+    }
+    for (int i=0; i<9; i++) {
+      for (int j=0; j<9; j++) {
+        solved[i][j]=p[i][j];
+      }
+    }
   }
   
   void easy() {
