@@ -24,7 +24,7 @@ void setup(){
   background(#B87E3E);
   //frameRate = 1;
   Time = new Timer();
-  puzzle=new Puzzle();
+  puzzle=new Puzzle(0);
 }
 
 void draw(){
