@@ -16,6 +16,8 @@ Button B3;
 Button B4;
 Board sudokuBoard;
 Button wheelGame;
+Button quit;
+Button activateHint;
 Timer Time;
 Puzzle puzzle;
 Points points;
@@ -56,14 +58,14 @@ void draw(){
     B4.isOver();
     B3.update();
     B4.update();
-  }
-  else if(gameState == 1) //Sudoku Puzzle.
-  { //<>//
+  } //<>//
+  else if(gameState == 1) //Sudoku Puzzle. //<>//
+  { //<>// //<>//
     //Keep background color the same. //<>//
     background(#B87E3E); //<>//
     
-    // Realistic Bamboo Background.
-    //Draw Sudoku Background
+    // Realistic Bamboo Background. //<>//
+    //Draw Sudoku Background //<>//
     PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg"); //<>//
     image(mainWoodBackground, 0, 0); //<>//
      //<>//
@@ -85,19 +87,46 @@ void draw(){
     image(sideMenuBackground, 450, -180);
     
     rectMode(CORNER);
-    wheelGame = new Button(100, 50, 475, 300, "Easy", #B4EBED, #68AFB2, #156164, #C2CECE);
+    wheelGame = new Button(100, 30, 475, 200, "", #B4EBED, #68AFB2, #156164, #C2CECE);
     wheelGame.isOver();
     wheelGame.update();
+    textSize(14);
+    fill(50);
+    textAlign(LEFT);
+    text("Mini Game", 480, 220);
+    
+    //activateHint
+    activateHint = new Button(100, 30, 475, 250, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+    activateHint.isOver();
+    activateHint.update();
+    textSize(14);
+    fill(50);
+    textAlign(LEFT);
+    text("Hint", 480, 270);
+    
+    //quit
+    quit = new Button(100, 30, 475, 500, "", #B4EBED, #68AFB2, #156164, #C2CECE);
+    quit.isOver();
+    quit.update();
+    textSize(14);
+    fill(50);
+    textAlign(LEFT);
+    text("Quit", 480, 520);
     
     Time.advance();
     textSize(20);
+    fill(255);
     text(Time.hour() + ":" + Time.minute() + ":" + Time.second(), 500,100);
     
     text("Points" + "\n" + points.returnPoints(), 510,170);
     
     text("Errors" + "\n" + errors.returnErrors(), 510,240);
     
-    
+    //Score
+    textSize(16);
+    fill(255);
+    text("Score: ", 460, 150);
+
     
     //Cartoony Menu
     /*
@@ -126,7 +155,7 @@ void draw(){
     fortuneWheel.display();
     
     rectMode(CORNER);
-    returnSudoku = new Button(100, 50, 250, 400, "Return", #E56E1E, #863A07, #FC8608, #0F0F0E);
+    returnSudoku = new Button(100, 30, 250, 400, "", #E56E1E, #863A07, #FC8608, #0F0F0E);
     if(fortuneWheel.doneSpinning() && checkRewardOnce)
     {
       gambleReward = fortuneWheel.getReward();
@@ -148,6 +177,8 @@ void draw(){
     {
       returnSudoku.isOver();
       returnSudoku.update();
+      textSize(20);
+      text("Return", 260, 425);
     }
   }
 }
@@ -178,10 +209,21 @@ void mouseClicked()
   else if(gameState == 1) //If we're in Sudoku.
   {
     wheelGame.isOver();
+    activateHint.isOver();
+    quit.isOver();
     if(wheelGame.over) //If the mouse is over the button.
     {
       gameState = 2; //Move Us to Mini Game State.
     }
+    else if(activateHint.over)
+    {
+      
+    }
+    else if(quit.over)
+    {
+      gameState = 0;
+    }
+    
     
     if(sudokuBoard.overSudokuBoard() == true){
        //if (!boxSelected) {
