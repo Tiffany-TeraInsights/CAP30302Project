@@ -1,4 +1,4 @@
-class Timer { //<>// //<>//
+class Timer {  //<>//
 
   int currentTime = 0;
   int startTime = 0;

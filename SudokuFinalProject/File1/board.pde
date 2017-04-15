@@ -124,6 +124,15 @@ class Board{
     int y = rowNum*cellSize;
     rect(x, y, cellSize, cellSize);
   }
+  
+  boolean checkIfWon(int puzzle[][], int solution[][]){
+    if(puzzle == solution){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
     
   
   Board(){
