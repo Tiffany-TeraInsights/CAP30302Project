@@ -1,7 +1,7 @@
 class spinner
 {
   int size;
-
+  
   spinner(int uSize)
   {
     size = uSize;
@@ -10,12 +10,16 @@ class spinner
   //Display the Spinner.
   void display(float rotation)
   {
+    float[] fills = {#00FF00, #FF0000, #0000FF, #FF8503, #FC007A, #00E9FC, #96FC00, #9B00FC };
+    float r = (2*PI)/8;
+      
+      
     noStroke();
     pushMatrix();
     translate(width/2, height/2);
 
     pushMatrix();
-    rotate(degrees(rotation));
+    rotate(radians(rotation));
 
     //Outside Circle
     fill(50);
@@ -75,6 +79,6 @@ class spinner
   //Returns a value to beginning spinning the spinner.
   int spin(float value)
   {
-    return (int)value * 20;
+    return (int)(value * 500*PI);
   }
 }

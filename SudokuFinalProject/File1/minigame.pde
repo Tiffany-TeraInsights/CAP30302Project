@@ -112,7 +112,8 @@ class minigame
      if(activeSpin && spinPower >= radians(360))
      {
        //Reduce the value of the rotation and spin.
-       spinPower = spinPower - 7.767566767534232;
+       //spinPower = spinPower - 7.767566767534232;
+       spinPower *= 0.95;
      }
      else if(activeSpin && spinPower < radians(360)) //If the wheel is done spinning
      {

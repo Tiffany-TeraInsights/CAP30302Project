@@ -1,4 +1,4 @@
-//Project Yo //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+//Project Yo //<>//
 //Added change
 /*
 gameState is used to dictate what "page" of the game we are on.
@@ -417,9 +417,9 @@ void keyTyped() {
         pencilIn.update(puzzle.p);
         points.increaseP(10);
         boxSelected=false;
-        if(sudokuBoard.checkIfWon(puzzle.p,puzzle.solved) == true){ //<>//
+        if(sudokuBoard.checkIfWon(puzzle.p,puzzle.solved) == true){
           gameState = 4; //<>//
-        } //<>//
+        }
       } else {
         errors.decreaseE();
       }
