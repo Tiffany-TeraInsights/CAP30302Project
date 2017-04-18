@@ -1,4 +1,4 @@
-//Project Yo //<>//
+//Project Yo //<>// //<>//
 //Added change
 /*
 gameState is used to dictate what "page" of the game we are on.
@@ -71,7 +71,8 @@ void setup() {
   gambleReward = "";
   
   //CREATE BUTTONS
-  B3 = new Button(200, 70, 90, 365, "Easy", #1CE86F, #1EBC5E, #1B7941, #FCFFFD);
+  color returnInside = color(#F7F7F7, 150);
+  B3 = new Button(200, 70, 90, 365, "Easy", returnInside, 0, #F7F7F7, #0F0F0E);
   B4 = new Button(200, 70, 310, 365, "Hard", #D33526, #BF3023, #933128, #FCFFFD);
   wheelGame = new Button(100, 30, 475, 180, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
@@ -80,6 +81,8 @@ void setup() {
   activateHint = new Button(60, 30, 460, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   autoHint = new Button(60, 30, 530, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   returnSudoku = new Button(100, 30, 250, 400, "", #E56E1E, #863A07, #FC8608, #0F0F0E);
+  activateHint = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
+  returnSudoku = new Button(100, 30, 250, 340, "", returnInside, 0, #F7F7F7, #0F0F0E);
   pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
   mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
   
@@ -185,7 +188,7 @@ void draw() {
       returnSudoku.isOver();
       returnSudoku.update();
       textSize(20);
-      text("Return", 260, 425);
+      text("Return", 267, 363);
     }
   }
   else if (gameState == 3) {
@@ -234,10 +237,10 @@ void mouseClicked()
       }
       //else {
         gameState = 2; //Move Us to Mini Game State.
-       // points.increaseP(-50);
-      //}
-    } 
-    else if (activateHint.over) { //<>// //<>// //<>//
+       // points.increaseP(-50); //<>//
+      //} //<>//
+    }  //<>//
+    else if (activateHint.over) { //<>// //<>// //<>// //<>//
       if (points.returnPoints()<hintCost) { //<>// //<>// //<>// //<>//
          GWindow hintWindow; //<>//
          hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D); //<>//
@@ -258,7 +261,7 @@ void mouseClicked()
         data.setOutput("Please select a cell\nfor your hint!");
         hintWindow.addData(data);
       }
-    } 
+    }  //<>//
     
       else if (autoHint.over) {
       /*if (points.returnPoints()<hintCost) { //<>// //<>// //<>//
@@ -390,7 +393,7 @@ void keyTyped() {
       else if (sudokuBoard.checkInput(input, box, puzzle.solved)) {
         puzzle.p[box/9][box%9]=input;
         pencilIn.update(puzzle.p);
-        points.increaseP(10);
+        points.increaseP(10); //<>//
         boxSelected=false;
         if(sudokuBoard.checkIfWon(puzzle.p,puzzle.solved) == true){
           gameState = 4; //<>//
@@ -442,8 +445,10 @@ void windowDraw(PApplet app, GWinData data){
 
 void menuBackground() {
   background(#B87E3E);
-  PImage image = loadImage("SudokuMainPic.jpg");
-  image(image, width/4, height/8);
+  PImage startBackground = loadImage("ZenGarden1.jpg");
+  PImage image = loadImage("SudokuTitle.png");
+  image(startBackground, -100, -115);
+  image(image, width/4, height/4);
 }
 
 void gameBackground() {
