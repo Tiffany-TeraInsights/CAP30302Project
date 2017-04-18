@@ -27,7 +27,7 @@ class Board{
   
   void showPencil(IntList pencil[][]) {
     textAlign(CENTER,CENTER);
-    fill(#5EB791);
+    fill(#619886);
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {
         if(pencil[i][j].size()==0) {
@@ -61,16 +61,16 @@ class Board{
           text(pencil[i][j].get(0), j*cellSize+cellSize/3, i*cellSize+cellSize/3);
           text(pencil[i][j].get(1), j*cellSize+cellSize/3*2, i*cellSize+cellSize/3);
           text(pencil[i][j].get(2), j*cellSize+cellSize/4, i*cellSize+cellSize/3*2);
-          text(pencil[i][j].get(3), j*cellSize+cellSize/2, i*cellSize+cellSize/3*2);
+          text(pencil[i][j].get(3), j*cellSize+cellSize/4*2, i*cellSize+cellSize/3*2);
           text(pencil[i][j].get(4), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3*2);         
         }
         else if (pencil[i][j].size()==6) {
           textSize(18);
           text(pencil[i][j].get(0), j*cellSize+cellSize/4, i*cellSize+cellSize/3);
-          text(pencil[i][j].get(1), j*cellSize+cellSize/2, i*cellSize+cellSize/3);
+          text(pencil[i][j].get(1), j*cellSize+cellSize/4*2, i*cellSize+cellSize/3);
           text(pencil[i][j].get(2), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3);         
           text(pencil[i][j].get(3), j*cellSize+cellSize/4, i*cellSize+cellSize/3*2);
-          text(pencil[i][j].get(4), j*cellSize+cellSize/2, i*cellSize+cellSize/3*2);
+          text(pencil[i][j].get(4), j*cellSize+cellSize/4*2, i*cellSize+cellSize/3*2);
           text(pencil[i][j].get(5), j*cellSize+cellSize/4*3, i*cellSize+cellSize/3*2);         
         }
       }

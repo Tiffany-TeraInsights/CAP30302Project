@@ -14,6 +14,9 @@ class Puzzle {
     nums.append(7);
     nums.append(8);
     nums.append(9);
+  }
+
+  void createSolved() {
     nums.shuffle();
     for (int i=0; i<9; i++) {
       p[0][i]=nums.get(i);
@@ -30,15 +33,14 @@ class Puzzle {
         solved[i][j]=p[i][j];
       }
     }
-    printPuzzle();
   }
-
+  
   void easy() {
-    int count =1;
+    int count=1;
     int rI=(int)random(0, 9);
     int rJ=(int)random(0, 9);
     p[rI][rJ]=0;
-    while (count<42) {
+    while (count<45) {
       int puzzleCopy[][]=new int[9][9];
       for (int i=0; i<9; i++) {
         for (int j=0; j<9; j++) {
@@ -71,7 +73,7 @@ class Puzzle {
     int rI=(int)random(0, 9);
     int rJ=(int)random(0, 9);
     p[rI][rJ]=0;
-    while (count<55) {
+    while (count<53) {
       int puzzleCopy[][]=new int[9][9];
       for (int i=0; i<9; i++) {
         for (int j=0; j<9; j++) {
@@ -402,6 +404,7 @@ class Puzzle {
     return true;
   }
 
+  
   void printPuzzle() {
     for (int i=0; i<9; i++) {
       if (i%3==0) {

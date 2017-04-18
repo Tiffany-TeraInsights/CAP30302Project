@@ -1,7 +1,10 @@
 class PencilIn {
   IntList[][] pencil=new IntList[9][9];
 
-  PencilIn(int p[][]) {
+  PencilIn() {
+  }
+  
+  void create(int p[][]) {
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {
         pencil[i][j]=new IntList();
