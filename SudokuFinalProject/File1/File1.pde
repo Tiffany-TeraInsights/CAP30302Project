@@ -130,12 +130,13 @@ void draw() {
     Time.advance();
     textSize(20);
     fill(255);
-    text(Time.convertToString(), 480, 100);
+    text(Time.convertToString(), 480, 80);
 
     textSize(16);
     fill(255);
-    text("Score: " + points.returnPoints(), 460, 130);
-    text("Errors: " + errors.returnErrors(), 460, 160);  
+    text("Score: " + points.returnPoints(), 460, 110);
+    text("Errors: " + errors.returnErrors(), 460, 140);  
+    text("Game Cost: " + 50 , 467, 170);
     text("Hint Cost: " + hint.returnHintCost(), 470, 240);
   } 
   else if (gameState == 2) {
@@ -236,11 +237,11 @@ void mouseClicked()
         miniWindow.addData(data);
       }
       else {
-        gameState = 2; //Move Us to Mini Game State.
+        gameState = 2; //Move Us to Mini Game State. //<>//
         points.increaseP(-50); //<>//
       } //<>//
     }  //<>//
-    else if (activateHint.over) { //<>// //<>// //<>// //<>//
+    else if (activateHint.over) { //<>// //<>// //<>//
       if (points.returnPoints()<hintCost) { //<>// //<>// //<>// //<>//
          GWindow hintWindow; //<>//
          hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D); //<>//
@@ -260,8 +261,8 @@ void mouseClicked()
         MyData data = new MyData();
         data.setOutput("Please select a cell\nfor your hint!");
         hintWindow.addData(data);
-      }
-    }  //<>//
+      } //<>//
+    } 
     
       else if (autoHint.over) {
       /*if (points.returnPoints()<hintCost) { //<>// //<>// //<>//
@@ -392,8 +393,8 @@ void keyTyped() {
       }
       else if (sudokuBoard.checkInput(input, box, puzzle.solved)) {
         puzzle.p[box/9][box%9]=input;
-        pencilIn.update(puzzle.p);
-        points.increaseP(10); //<>//
+        pencilIn.update(puzzle.p); //<>//
+        points.increaseP(10);
         boxSelected=false;
         if(sudokuBoard.checkIfWon(puzzle.p,puzzle.solved) == true){
           gameState = 4; //<>//
