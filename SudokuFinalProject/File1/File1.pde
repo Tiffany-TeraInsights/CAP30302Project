@@ -45,6 +45,7 @@ Button pencil;
 Button mark;
 
 SoundFile backgroundMusic;
+SoundFile clickSound;
 
 void setup() {
   size(600, 450);
@@ -73,7 +74,7 @@ void setup() {
   //CREATE BUTTONS
   color returnInside = color(#F7F7F7, 150);
   B3 = new Button(200, 70, 90, 365, "Easy", returnInside, 0, #F7F7F7, #0F0F0E);
-  B4 = new Button(200, 70, 310, 365, "Hard", #D33526, #BF3023, #933128, #FCFFFD);
+  B4 = new Button(200, 70, 310, 365, "Hard", returnInside, 0, #F7F7F7, #0F0F0E);
   wheelGame = new Button(100, 30, 475, 180, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit2 = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
@@ -86,6 +87,7 @@ void setup() {
   pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
   mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
   
+  clickSound = new SoundFile(this, "ClickSound.mp3");
   backgroundMusic = new SoundFile(this, "background music.mp3");
   backgroundMusic.loop();
 }
@@ -206,19 +208,22 @@ void draw() {
 
 void mouseClicked()
 {
+  clickSound.play();
   if (gameState == 0) //Only occurs when in the Main Menu
   {
     puzzle.createSolved();
-    gameState = 1; //Bring us to Sudoku.
+
     if (B3.over) //If mouse if over button
     {
       puzzle.easy();
       pencilIn.create(puzzle.p);
+      gameState = 1; //Bring us to Sudoku.
     } 
     else if (B4.over) //If mouse is over button
     {
       puzzle.hard();
       pencilIn.create(puzzle.p);
+      gameState = 1; //Bring us to Sudoku.
     } else
     {
       //Do Nothing
@@ -447,14 +452,14 @@ void windowDraw(PApplet app, GWinData data){
 void menuBackground() {
   background(#B87E3E);
   PImage startBackground = loadImage("ZenGarden1.jpg");
-  PImage image = loadImage("SudokuTitle.png");
-  image(startBackground, -100, -115);
+  PImage image = loadImage("SudokuTitle4.png");
+  image(startBackground, -200, -115);
   image(image, width/4, height/4);
 }
 
 void gameBackground() {
   background(#B87E3E);
-  PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg");
+  PImage mainWoodBackground = loadImage("SudokuSideMenu.jpg");
   image(mainWoodBackground, 0, 0);
 }
 
