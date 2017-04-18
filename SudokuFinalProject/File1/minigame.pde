@@ -5,6 +5,8 @@ class minigame
   int drawPower = 105; //Used for drawing the bar.
   float spinPower = 0; //Used for beginning the spin.
   boolean activeSpin = false;
+  float rotationDecrease = 10.767566767534232;
+  int rewardMarker = 0;
   
   minigame(int size)
   {
@@ -14,40 +16,53 @@ class minigame
   //Returns the name of the color the spinner landed on so "File1" can decide what that means.
   String getReward()
   {
+    while(spinPower > radians(360))
+    {
+      spinPower = spinPower - radians(360);
+    }
     float rewardNum = spinPower;
     String reward = "";
     if(rewardNum <= PI / 4)
     {
       reward = "TEAL";
+      rewardMarker = 6;
     }
     else if(rewardNum <= PI / 2)
     {
       reward = "MAGENTA";
+      rewardMarker = 5;
     }
     else if(rewardNum <= (3 * PI)/4)
     {
       reward = "ORANGE";
+      rewardMarker = 4;
     }
     else if(rewardNum <= PI)
     {
       reward = "BLUE";
+      rewardMarker = 3;
     }
     else if(rewardNum <= (5 * PI)/4)
     {
       reward = "RED";
+      rewardMarker = 1;
     }
     else if(rewardNum <= (3 * PI)/2)
     {
       reward = "GREEN";
+      rewardMarker = 2;
     }
     else if(rewardNum <= (7 * PI)/4)
     {
       reward = "PURPLE";
+      rewardMarker = 8;
     }
     else if(rewardNum <= 2 * PI)
     {
       reward = "LIME";
+      rewardMarker = 7;
     }
+    println(reward);
     return reward;
   }
   
@@ -61,42 +76,99 @@ class minigame
     PImage lasVegasSign = loadImage("lvsign.png");
     image(lasVegasSign,400,10,200,200);
     
+    noStroke();
     fill(#F7F7F7,150);
     rect(10,50,170,300);
     
     textSize(10);
+    
+    if(rewardMarker == 1)
+    {
+      strokeWeight(3);
+      stroke(#FFF303);
+    }
     fill(255,0,0);
     rect(20,70,10,10);
     fill(0);
     text(" - Halve Your Points",30,79);
+    noStroke();
+    
+    if(rewardMarker == 2)
+    {
+      strokeWeight(3);
+      stroke(#FFF303);
+    }
     fill(0,255,0);
     rect(20,100,10,10);
     fill(0);
     text(" - Lose All Points",30,109);
+    noStroke();
+    
+    if(rewardMarker == 3)
+    {
+      strokeWeight(3);
+      stroke(#FFF303);
+    }
     fill(0,0,255);
     rect(20,130,10,10);
     fill(0);
     text(" + Increase Errors Left By 1 ",30,139);
+    noStroke();
+    
+    if(rewardMarker == 4)
+    {
+      strokeWeight(3);
+      stroke(#FFF303);
+    }
     fill(#FF8503);
     rect(20,160,10,10);
     fill(0);
     text(" + Hint Cost Reduced By Half ",30,169);
+    noStroke();
+    
+    if(rewardMarker == 5)
+    {
+      strokeWeight(3);
+      stroke(#FFF303);
+    }
     fill(#FC007A);
     rect(20,190,10,10);
     fill(0);
     text(" + Triple Points",30,199);
+    noStroke();
+    
+    if(rewardMarker == 6)
+    {
+      strokeWeight(3);
+      stroke(#FFF303);
+    }
     fill(#00E9FC);
     rect(20,220,10,10);
     fill(0);
     text(" + Double Points",30,229);
+    noStroke();
+    
+    if(rewardMarker == 7)
+    {
+      strokeWeight(3);
+      stroke(#FFF303);
+    }
     fill(#96FC00); 
     rect(20,250,10,10);
     fill(0);
     text(" - Set Errors Left To 1",30,259);
+    noStroke();
+    
+    if(rewardMarker == 8)
+    {
+      strokeWeight(3);
+      stroke(#FFF303);
+    }
     fill(#9B00FC);
     rect(20,280,10,10);
     fill(0);
     text(" - Double Hint Cost",30,289);
+    noStroke();
     
     text(" + : Gain      - : Loss",30,330);
     
@@ -109,13 +181,14 @@ class minigame
      wheel.display(degrees(spinPower));
      
      //If the wheel is currently spinning.
-     if(activeSpin && spinPower >= radians(360))
+     if(activeSpin && rotationDecrease > 0.005)
      {
        //Reduce the value of the rotation and spin.
-       spinPower = spinPower - 7.767566767534232;
+       spinPower = spinPower - rotationDecrease;
+       rotationDecrease = rotationDecrease * 0.9;
 
      }
-     else if(activeSpin && spinPower < radians(360)) //If the wheel is done spinning
+     else if(activeSpin && rotationDecrease < 0.005) //If the wheel is done spinning
      {
        //Stop updating spinPower as we are done.
      }
@@ -142,6 +215,7 @@ class minigame
   void setSpinPower(int power)
   {
     spinPower = wheel.spin(power);
+    rotationDecrease = wheel.spin(power/10);
     activeSpin = true;
   }
   
@@ -153,7 +227,7 @@ class minigame
   
   boolean doneSpinning()
   {
-    if(activeSpin && spinPower < radians(360))
+    if(activeSpin && rotationDecrease < 0.005)
     {
       return true;
     }

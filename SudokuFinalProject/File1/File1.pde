@@ -75,7 +75,8 @@ void setup() {
   quit2 = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit3 = new Button(100,30,300,400,"",#458B86, #68AFB2, #156164, #C2CECE); 
   activateHint = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
-  returnSudoku = new Button(100, 30, 250, 400, "", #E56E1E, #863A07, #FC8608, #0F0F0E);
+  color returnInside = color(#F7F7F7, 150);
+  returnSudoku = new Button(100, 30, 250, 340, "", returnInside, 0, #F7F7F7, #0F0F0E);
   pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
   mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
   
@@ -177,7 +178,7 @@ void draw() {
       returnSudoku.isOver();
       returnSudoku.update();
       textSize(20);
-      text("Return", 260, 425);
+      text("Return", 267, 363);
     }
   }
   else if (gameState == 3) {
