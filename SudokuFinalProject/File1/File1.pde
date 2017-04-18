@@ -356,7 +356,15 @@ void keyTyped() {
     }
 
     if (mode==0) {
-      if (sudokuBoard.checkInput(input, box, puzzle.solved)) {
+      if (input==0) {
+         GWindow invalidInputWindow;
+         invalidInputWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+         invalidInputWindow.addDrawHandler(this, "windowDraw");
+         MyData data = new MyData();
+         data.setOutput("Please enter only\nnumbers 1 through 9.");
+         invalidInputWindow.addData(data);
+      }
+      else if (sudokuBoard.checkInput(input, box, puzzle.solved)) {
         puzzle.p[box/9][box%9]=input;
         pencilIn.update(puzzle.p);
         points.increaseP(10);
