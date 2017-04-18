@@ -106,14 +106,14 @@ class minigame
     text("Hold down w to increase spin power!",210,395);
     
     //Display the wheel with the update rotation value.
-     wheel.display(radians(spinPower));
+     wheel.display(degrees(spinPower));
      
      //If the wheel is currently spinning.
      if(activeSpin && spinPower >= radians(360))
      {
        //Reduce the value of the rotation and spin.
-       //spinPower = spinPower - 7.767566767534232;
-       spinPower *= 0.95;
+       spinPower = spinPower - 7.767566767534232;
+
      }
      else if(activeSpin && spinPower < radians(360)) //If the wheel is done spinning
      {
