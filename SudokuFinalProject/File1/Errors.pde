@@ -10,6 +10,10 @@ class Errors {
     totalErrors -= 1;
   }
   
+  void setToOne(){
+    totalErrors = 1; 
+  }
+  
   int returnErrors(){
     return totalErrors;
   }

@@ -3,7 +3,7 @@ class Puzzle {
   int solved[][]=new int[9][9];
   IntList nums=new IntList();
   int puzzleCopy[][] = new int[9][9];
-  
+
   Puzzle() {
     nums.append(1);
     nums.append(2);
@@ -24,7 +24,7 @@ class Puzzle {
       }
     }
     nums.sort();
-    Boolean check=generateSolution(0,0);
+    Boolean check=generateSolution(0, 0);
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {
         solved[i][j]=p[i][j];
@@ -32,11 +32,11 @@ class Puzzle {
     }
     printPuzzle();
   }
-  
+
   void easy() {
     int count =1;
-    int rI=(int)random(0,9);
-    int rJ=(int)random(0,9);
+    int rI=(int)random(0, 9);
+    int rJ=(int)random(0, 9);
     p[rI][rJ]=0;
     while (count<42) {
       int puzzleCopy[][]=new int[9][9];
@@ -45,19 +45,19 @@ class Puzzle {
           puzzleCopy[i][j]=p[i][j];
         }
       }
-      rI=(int)random(0,9);
-      rJ=(int)random(0,9);
+      rI=(int)random(0, 9);
+      rJ=(int)random(0, 9);
       if (p[rI][rJ]!=0) {
         puzzleCopy[rI][rJ]=0;
-        if (testIndex(puzzleCopy,0,0,rI,rJ,p[rI][rJ])) {
+        if (testIndex(puzzleCopy, 0, 0, rI, rJ, p[rI][rJ])) {
           p[rI][rJ]=0;
           count++;
         }
       }
       if (count<30) {
-        if(puzzleCopy[8-rI][8-rJ]!=0) {
+        if (puzzleCopy[8-rI][8-rJ]!=0) {
           puzzleCopy[8-rI][8-rJ]=0;
-          if (testIndex(puzzleCopy,0,0,8-rI,8-rJ,p[8-rI][8-rJ])) {
+          if (testIndex(puzzleCopy, 0, 0, 8-rI, 8-rJ, p[8-rI][8-rJ])) {
             p[8-rI][8-rJ]=0;
             count++;
           }
@@ -65,11 +65,11 @@ class Puzzle {
       }
     }
   }
-  
+
   void hard() {
     int count =1;
-    int rI=(int)random(0,9);
-    int rJ=(int)random(0,9);
+    int rI=(int)random(0, 9);
+    int rJ=(int)random(0, 9);
     p[rI][rJ]=0;
     while (count<55) {
       int puzzleCopy[][]=new int[9][9];
@@ -78,19 +78,19 @@ class Puzzle {
           puzzleCopy[i][j]=p[i][j];
         }
       }
-      rI=(int)random(0,9);
-      rJ=(int)random(0,9);
+      rI=(int)random(0, 9);
+      rJ=(int)random(0, 9);
       if (p[rI][rJ]!=0) {
         puzzleCopy[rI][rJ]=0;
-        if (testIndex(puzzleCopy,0,0,rI,rJ,p[rI][rJ])) {
+        if (testIndex(puzzleCopy, 0, 0, rI, rJ, p[rI][rJ])) {
           p[rI][rJ]=0;
           count++;
         }
       }
       if (count<30) {
-        if(puzzleCopy[8-rI][8-rJ]!=0) {
+        if (puzzleCopy[8-rI][8-rJ]!=0) {
           puzzleCopy[8-rI][8-rJ]=0;
-          if (testIndex(puzzleCopy,0,0,8-rI,8-rJ,p[8-rI][8-rJ])) {
+          if (testIndex(puzzleCopy, 0, 0, 8-rI, 8-rJ, p[8-rI][8-rJ])) {
             p[8-rI][8-rJ]=0;
             count++;
           }
@@ -98,13 +98,12 @@ class Puzzle {
       }
     }
   }
-  
+
   Boolean generateSolution(int a, int b) {
     int k;
     if (a==8 && b==8) {
       return true;
-    }
-    else {
+    } else {
       for (int i=0; i<9; i++) {
         for (int j=0; j<9; j++) {
           k=0;
@@ -117,16 +116,14 @@ class Puzzle {
                 if (k==9) {
                   return false;
                 }
-              }
-              else {
-                if(!generateSolution(i,j)) {
+              } else {
+                if (!generateSolution(i, j)) {
                   k++;
                   if (k==9) {
                     p[i][j]=0;
                     return false;
                   }
-                }
-                else {
+                } else {
                   return true;
                 }
               }
@@ -137,13 +134,12 @@ class Puzzle {
     }
     return true;
   }
-  
+
   Boolean checkIndex(int puz[][], int a, int b) {
     int k;
     if (a==8 && b==8) {
       return true;
-    }
-    else {
+    } else {
       for (int i=0; i<9; i++) {
         for (int j=0; j<9; j++) {
           k=0;
@@ -156,16 +152,14 @@ class Puzzle {
                 if (k==9) {
                   return false;
                 }
-              }
-              else {
-                if(!checkIndex(puz,i,j)) {
+              } else {
+                if (!checkIndex(puz, i, j)) {
                   k++;
                   if (k==9) {
                     puz[i][j]=0;
                     return false;
                   }
-                }
-                else {
+                } else {
                   return true;
                 }
               }
@@ -176,21 +170,20 @@ class Puzzle {
     }
     return true;
   }
-  
-  Boolean testIndex(int puz[][],int a, int b, int indexI, int indexJ, int original) {
+
+  Boolean testIndex(int puz[][], int a, int b, int indexI, int indexJ, int original) {
     for (int k=0; k<9; k++) {
       if (k==original-1) {
-      }
-      else {
+      } else {
         puz[indexI][indexJ]=nums.get(k);
-        if(checkIndex(puz,0,0)) {
+        if (checkIndex(puz, 0, 0)) {
           return false;
         }
       }
     }
     return true;
   }
-                
+
   Boolean checkRowsCols(int puz[][]) {
     Boolean rOne, rTwo, rThree, rFour, rFive, rSix, rSeven, rEight, rNine;
     Boolean cOne, cTwo, cThree, cFour, cFive, cSix, cSeven, cEight, cNine;
@@ -201,144 +194,126 @@ class Puzzle {
         if (puz[i][j]==1) {
           if (rOne) {
             return false;
-          }
-          else {
+          } else {
             rOne=true;
           }
         }
         if (puz[j][i]==1) {
           if (cOne) {
             return false;
-          }
-          else {
+          } else {
             cOne=true;
           }
         }
         if (puz[i][j]==2) {
           if (rTwo) {
             return false;
-          }
-          else {
+          } else {
             rTwo=true;
           }
         }
         if (puz[j][i]==2) {
           if (cTwo) {
             return false;
-          }
-          else {
+          } else {
             cTwo=true;
           }
         }
         if (puz[i][j]==3) {
           if (rThree) {
             return false;
-          }
-          else {
+          } else {
             rThree=true;
           }
         }
         if (puz[j][i]==3) {
           if (cThree) {
             return false;
-          }
-          else {
+          } else {
             cThree=true;
           }
         }
         if (puz[i][j]==4) {
           if (rFour) {
             return false;
-          }
-          else {
+          } else {
             rFour=true;
           }
         }
         if (puz[j][i]==4) {
           if (cFour) {
             return false;
-          }
-          else {
+          } else {
             cFour=true;
           }
         }
         if (puz[i][j]==5) {
           if (rFive) {
             return false;
-          }
-          else {
+          } else {
             rFive=true;
           }
         }
         if (puz[j][i]==5) {
           if (cFive) {
             return false;
-          }
-          else {
+          } else {
             cFive=true;
           }
         }
         if (puz[i][j]==6) {
           if (rSix) {
             return false;
-          }
-          else {
+          } else {
             rSix=true;
           }
         }
         if (puz[j][i]==6) {
           if (cSix) {
             return false;
-          }
-          else {
+          } else {
             cSix=true;
           }
         }
         if (puz[i][j]==7) {
           if (rSeven) {
             return false;
-          }
-          else {
+          } else {
             rSeven=true;
           }
         }
         if (puz[j][i]==7) {
           if (cSeven) {
             return false;
-          }
-          else {
+          } else {
             cSeven=true;
           }
         }
         if (puz[i][j]==8) {
           if (rEight) {
             return false;
-          }
-          else {
+          } else {
             rEight=true;
           }
         }
         if (puz[j][i]==8) {
           if (cEight) {
             return false;
-          }
-          else {
+          } else {
             cEight=true;
           }
         }
         if (puz[i][j]==9) {
           if (rNine) {
             return false;
-          }
-          else {
+          } else {
             rNine=true;
           }
         }
         if (puz[j][i]==9) {
           if (cNine) {
             return false;
-          }
-          else {
+          } else {
             cNine=true;
           }
         }
@@ -348,7 +323,7 @@ class Puzzle {
     }
     return true;
   }
-  
+
   Boolean checkBlocks(int puz[][]) {
     Boolean one, two, three, four, five, six, seven, eight, nine;
     one=two=three=four=five=six=seven=eight=nine=false;
@@ -359,72 +334,63 @@ class Puzzle {
             if (puz[3*i+k][3*j+l]==1) {
               if (one) {
                 return false;
-              }
-              else {
+              } else {
                 one=true;
               }
             }
             if (puz[3*i+k][3*j+l]==2) {
               if (two) {
                 return false;
-              }
-              else {
+              } else {
                 two=true;
               }
             }
             if (puz[3*i+k][3*j+l]==3) {
               if (three) {
                 return false;
-              }
-              else {
+              } else {
                 three=true;
               }
             }
             if (puz[3*i+k][3*j+l]==4) {
               if (four) {
                 return false;
-              }
-              else {
+              } else {
                 four=true;
               }
             }
             if (puz[3*i+k][j*3+l]==5) {
               if (five) {
                 return false;
-              }
-              else {
+              } else {
                 five=true;
               }
             }
             if (puz[3*i+k][3*j+l]==6) {
               if (six) {
                 return false;
-              }
-              else {
+              } else {
                 six=true;
               }
             }
             if (puz[3*i+k][3*j+l]==7) {
               if (seven) {
                 return false;
-              }
-              else {
+              } else {
                 seven=true;
               }
             }
             if (puz[3*i+k][3*j+l]==8) {
               if (eight) {
                 return false;
-              }
-              else {
+              } else {
                 eight=true;
               }
             }
             if (puz[3*i+k][3*j+l]==9) {
               if (nine) {
                 return false;
-              }
-              else {
+              } else {
                 nine=true;
               }
             }
@@ -435,7 +401,7 @@ class Puzzle {
     }
     return true;
   }
-  
+
   void printPuzzle() {
     for (int i=0; i<9; i++) {
       if (i%3==0) {
@@ -450,7 +416,7 @@ class Puzzle {
       println("");
     }
   }
-  
+
   void printArray() {
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {
@@ -458,13 +424,8 @@ class Puzzle {
       }
     }
   }
-  
-  int[][] saveSolution(){
+
+  int[][] saveSolution() {
     return puzzleCopy;
   }
-  
 }
-  
-  
-        
-          

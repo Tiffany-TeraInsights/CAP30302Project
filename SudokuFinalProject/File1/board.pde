@@ -5,25 +5,12 @@ class Board{
   int cellSize;
   
   
-  void drawBoard(){
+ void drawBoard(){
     stroke(0);
     fill(255, 255, 255, 190);
     rect(0,0,(width-150),height);
     cellSize = ((width-150))/size;
     for (int i=0; i<10; i++) {
-<<<<<<< HEAD
-      // change stroke weight
-      if (i%3 == 0)
-        strokeWeight(3);
-      else
-        strokeWeight(1);
-      line(i*cellSize, 0, i*cellSize, (height-150));
-      line(0, i*cellSize, (width - 150), i*cellSize);
-    }
-    strokeWeight(3);
-    line(width-2, 0, width-2, (height-150));
-    line(0, height-2, (width - 150), height-2);
-=======
     // change stroke weight
     if (i%3 == 0)
       strokeWeight(3);
@@ -36,7 +23,6 @@ class Board{
   line(width-2, 0, width-2, height);
   line(0, height-2, (width - 150), height-2);
     
->>>>>>> origin/master
   }
   
   void showPencil(IntList pencil[][]) {
@@ -44,7 +30,9 @@ class Board{
     fill(#5EB791);
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {
-        if(pencil[i][j].get(0)==0) {
+        if(pencil[i][j].size()==0) {
+        }
+        else if(pencil[i][j].get(0)==0) {
         }
         else if (pencil[i][j].size()==1) {
           textSize(30);
@@ -135,6 +123,15 @@ class Board{
     int x = colNum*cellSize;
     int y = rowNum*cellSize;
     rect(x, y, cellSize, cellSize);
+  }
+  
+  boolean checkIfWon(int puzzle[][], int solution[][]){
+    if(puzzle == solution){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
     
   

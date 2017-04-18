@@ -55,20 +55,65 @@ class minigame
   void display()
   {
     //Display a Carnival Background.
-    for(int i = 0; i < 5; i++)
-    {
-      fill(colorArray[i]);
-      rect(i * 120, 0, (i * 120) + 120, height);
-    }
+    PImage miniGameBackground = loadImage("lasvegas.jpg");
+    image(miniGameBackground, 0, 0);
+    
+    PImage lasVegasSign = loadImage("lvsign.png");
+    image(lasVegasSign,400,10,200,200);
+    
+    fill(#F7F7F7,150);
+    rect(10,50,170,300);
+    
+    textSize(10);
+    fill(255,0,0);
+    rect(20,70,10,10);
+    fill(0);
+    text(" - Halve Your Points",30,79);
+    fill(0,255,0);
+    rect(20,100,10,10);
+    fill(0);
+    text(" - Lose All Points",30,109);
+    fill(0,0,255);
+    rect(20,130,10,10);
+    fill(0);
+    text(" + Increase Errors Left By 1 ",30,139);
+    fill(#FF8503);
+    rect(20,160,10,10);
+    fill(0);
+    text(" + Hint Cost Reduced By Half ",30,169);
+    fill(#FC007A);
+    rect(20,190,10,10);
+    fill(0);
+    text(" + Triple Points",30,199);
+    fill(#00E9FC);
+    rect(20,220,10,10);
+    fill(0);
+    text(" + Double Points",30,229);
+    fill(#96FC00); 
+    rect(20,250,10,10);
+    fill(0);
+    text(" - Set Errors Left To 1",30,259);
+    fill(#9B00FC);
+    rect(20,280,10,10);
+    fill(0);
+    text(" - Double Hint Cost",30,289);
+    
+    text(" + : Gain      - : Loss",30,330);
+    
+    fill(255,150);
+    rect(200,380,200,30);
+    fill(0);
+    text("Hold down w to increase spin power!",210,395);
     
     //Display the wheel with the update rotation value.
-     wheel.display(radians(spinPower));
+     wheel.display(degrees(spinPower));
      
      //If the wheel is currently spinning.
      if(activeSpin && spinPower >= radians(360))
      {
        //Reduce the value of the rotation and spin.
        spinPower = spinPower - 7.767566767534232;
+
      }
      else if(activeSpin && spinPower < radians(360)) //If the wheel is done spinning
      {
@@ -78,12 +123,12 @@ class minigame
     //Outline of powerbar.
     fill(150);
     rectMode(CORNERS);
-    rect(100, height - 100, width - 100, height - 50);
+    rect(100, height - 50, width - 100, height - 5);
     
     //Inside of power bar.
     fill(0, 150, 0);
     rectMode(CORNERS);
-    rect(105, height - 95, drawPower, height - 55);
+    rect(105, height - 45, drawPower, height - 10);
   }
   
   //Sets the drawPower to we can update the power bar.
