@@ -14,6 +14,7 @@ Puzzle puzzle;
 PencilIn pencilIn;
 Points points;
 Errors errors;
+Hints hint;
 int gameState;
 int mode;
 int hintCost;
@@ -38,6 +39,7 @@ Button B4;
 Button wheelGame;
 Button quit, quit2, quit3;
 Button activateHint;
+Button autoHint;
 Button returnSudoku;
 Button pencil;
 Button mark;
@@ -52,6 +54,7 @@ void setup() {
   pencilIn=new PencilIn();
   points = new Points();
   errors = new Errors();
+  hint = new Hints(100);
   gameState=0;
   mode=0;
   hintCost=100;
@@ -70,17 +73,18 @@ void setup() {
   //CREATE BUTTONS
   B3 = new Button(200, 70, 90, 365, "Easy", #1CE86F, #1EBC5E, #1B7941, #FCFFFD);
   B4 = new Button(200, 70, 310, 365, "Hard", #D33526, #BF3023, #933128, #FCFFFD);
-  wheelGame = new Button(100, 30, 475, 200, "", #458B86, #68AFB2, #156164, #C2CECE);
+  wheelGame = new Button(100, 30, 475, 180, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit2 = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit3 = new Button(100,30,300,400,"",#458B86, #68AFB2, #156164, #C2CECE); 
-  activateHint = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
+  activateHint = new Button(60, 30, 460, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
+  autoHint = new Button(60, 30, 530, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   returnSudoku = new Button(100, 30, 250, 400, "", #E56E1E, #863A07, #FC8608, #0F0F0E);
   pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
   mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
   
-  //backgroundMusic = new SoundFile(this, "background music.mp3");
-  //backgroundMusic.loop();
+  backgroundMusic = new SoundFile(this, "background music.mp3");
+  backgroundMusic.loop();
 }
 
 void draw() {
@@ -103,10 +107,13 @@ void draw() {
     
     rectMode(CORNER);
     wheelGame.update();
-    formatButton("Mini Game", 480, 220); 
+    formatButton("Mini Game", 480, 200); 
     
     activateHint.update();
-    formatButton("Hint", 480, 270);
+    formatButton("Pick", 476, 270);
+    
+    autoHint.update();
+    formatButton("Auto", 544, 270);
 
     mark.update();
     formatButton("Mark", 480, 320);
@@ -124,8 +131,9 @@ void draw() {
 
     textSize(16);
     fill(255);
-    text("Score: " + points.returnPoints(), 460, 150);
-    text("Errors: " + errors.returnErrors(), 460, 180);  
+    text("Score: " + points.returnPoints(), 460, 130);
+    text("Errors: " + errors.returnErrors(), 460, 160);  
+    text("Hint Cost: " + hint.returnHintCost(), 470, 240);
   } 
   else if (gameState == 2) {
     fortuneWheel.display();
@@ -229,17 +237,16 @@ void mouseClicked()
        // points.increaseP(-50);
       //}
     } 
-    else if (activateHint.over) {
-      if (points.returnPoints()<hintCost) {
-         GWindow hintWindow;
-         hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+    else if (activateHint.over) { //<>// //<>// //<>//
+      if (points.returnPoints()<hintCost) { //<>// //<>// //<>// //<>//
+         GWindow hintWindow; //<>//
+         hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D); //<>//
          hintWindow.addDrawHandler(this, "windowDraw");
          MyData data = new MyData();
          data.setOutput("Sorry, you haven't\nearned enough points\nto receive a hint yet!\nThe current cost for a\nhint is " + hintCost + " points.");
          hintWindow.addData(data);
       }
       else if (boxSelected) {
-        Hints hint = new Hints(hintCost);
         puzzle.p[box/9][box%9]=hint.giveHint(box, puzzle.solved);
         points.increaseP(hintCost*(-1));
       }
@@ -252,6 +259,22 @@ void mouseClicked()
         hintWindow.addData(data);
       }
     } 
+    
+      else if (autoHint.over) {
+      /*if (points.returnPoints()<hintCost) { //<>// //<>// //<>//
+         GWindow hintWindow;
+         hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+         hintWindow.addDrawHandler(this, "windowDraw");
+         MyData data = new MyData();
+         data.setOutput("Sorry, you haven't\nearned enough points\nto receive a hint yet!\nThe current cost for a\nhint is " + hintCost + " points.");
+         hintWindow.addData(data);
+      }
+      else{ */
+         puzzle.p = hint.getHint(puzzle.p,puzzle.solved);
+         points.increaseP(hintCost*(-1));
+    //  }
+    } 
+    
     else if (quit.over) {
       resetGame();
       gameState = 0;
