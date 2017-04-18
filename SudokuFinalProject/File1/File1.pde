@@ -78,7 +78,7 @@ void setup() {
   quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit2 = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit3 = new Button(100,30,300,400,"",#458B86, #68AFB2, #156164, #C2CECE); 
-  activateHint = new Button(60, 30, 460, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
+  activateHint = new Button(60, 30, 400, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   autoHint = new Button(60, 30, 530, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   returnSudoku = new Button(100, 30, 250, 400, "", #E56E1E, #863A07, #FC8608, #0F0F0E);
   activateHint = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
@@ -113,7 +113,7 @@ void draw() {
     formatButton("Mini Game", 480, 200); 
     
     activateHint.update();
-    formatButton("Pick", 476, 270);
+    formatButton("Pick", 490, 270);
     
     autoHint.update();
     formatButton("Auto", 544, 270);
@@ -235,10 +235,10 @@ void mouseClicked()
         data.setOutput("Sorry, you must have\nat least 50 points to\nplay the mini game!");
         miniWindow.addData(data);
       }
-      //else {
+      else {
         gameState = 2; //Move Us to Mini Game State.
-       // points.increaseP(-50); //<>//
-      //} //<>//
+        points.increaseP(-50); //<>//
+      } //<>//
     }  //<>//
     else if (activateHint.over) { //<>// //<>// //<>// //<>//
       if (points.returnPoints()<hintCost) { //<>// //<>// //<>// //<>//
