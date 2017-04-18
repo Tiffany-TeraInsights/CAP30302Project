@@ -9,7 +9,6 @@ gameState is used to dictate what "page" of the game we are on.
 import processing.sound.*;
 import g4p_controls.*;
 
-GWindow window;
 int gameState = 0;
 int difficulty;
 int x;
@@ -77,7 +76,8 @@ void draw() {
     //Update buttons
     B3.update();
     B4.update();
-  } else if (gameState == 1) //Sudoku Puzzle.
+  } 
+  else if (gameState == 1) //Sudoku Puzzle.
   { 
     //Keep background color the same.
     background(#B87E3E);
@@ -182,7 +182,8 @@ void draw() {
     fill(255);
     text("Score: " + points.returnPoints(), 460, 150);
     text("Errors: " + errors.returnErrors(), 460, 180);
-  } else if (gameState == 2) {
+  } 
+  else if (gameState == 2) {
     fortuneWheel.display();
 
     rectMode(CORNER);
@@ -433,8 +434,15 @@ void keyTyped() {
         if(sudokuBoard.checkIfWon(puzzle.p,puzzle.solved) == true){
           gameState = 4; //<>//
         }
-      } else {
+      } 
+      else {
         errors.decreaseE();
+        GWindow errorWindow;
+        errorWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+        errorWindow.addDrawHandler(this, "windowDraw");
+        MyData data = new MyData();
+        data.setOutput("Sorry, that's not the\ncorrect number for\nthis cell.\nErrors remaining: "+errors.totalErrors);
+        errorWindow.addData(data);
       }
       if (errors.returnErrors() == 0) {
         gameState = 3;
@@ -450,6 +458,6 @@ void windowDraw(PApplet app, GWinData data){
   app.background(255);
   app.strokeWeight(2);
   app.fill(0);
-  app.textSize(30);
-  app.text(myData.output, 10, 60);
+  app.textSize(27);
+  app.text(myData.output, 10, 40);
 }
