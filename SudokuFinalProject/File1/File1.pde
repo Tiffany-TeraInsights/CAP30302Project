@@ -15,6 +15,7 @@ PencilIn pencilIn;
 Points points;
 Errors errors;
 Hints hint;
+HighScores hs;
 int gameState;
 int mode;
 int hintCost;
@@ -24,6 +25,8 @@ int x;
 int y;
 int box;
 boolean boxSelected;
+
+
 
 Timer Time;
 String hour, minute, second;
@@ -55,6 +58,7 @@ void setup() {
   points = new Points();
   errors = new Errors();
   hint = new Hints(100);
+  hs = new HighScores();
   gameState=0;
   mode=0;
   hintCost=100;
@@ -198,6 +202,7 @@ void draw() {
     formatButton("Quit", 480, 420);
   }
   else if(gameState == 4){
+    
     youWonBackground();
     quit3.update();
     formatButton("Return To Menu",300,410);
@@ -209,16 +214,17 @@ void mouseClicked()
   if (gameState == 0) //Only occurs when in the Main Menu
   {
     puzzle.createSolved();
-    gameState = 1; //Bring us to Sudoku.
     if (B3.over) //If mouse if over button
     {
       puzzle.easy();
       pencilIn.create(puzzle.p);
+      gameState = 1; //Bring us to Sudoku.
     } 
     else if (B4.over) //If mouse is over button
     {
       puzzle.hard();
       pencilIn.create(puzzle.p);
+      gameState = 1; //Bring us to Sudoku.
     } else
     {
       //Do Nothing
@@ -226,21 +232,25 @@ void mouseClicked()
   } 
   else if (gameState == 1) //If we're in Sudoku.
   {
-    if (wheelGame.over) //If the mouse is over the button.
-    {
-      if (points.returnPoints()<50) {
-        GWindow miniWindow;
-        miniWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+    if(puzzle.p == puzzle.solved){
+      hs.addHighScore(Time.getCurrentTime());
+      gameState = 4;
+    }
+    else if (wheelGame.over) //If the mouse is over the button.
+    { //<>//
+      if (points.returnPoints()<50) { //<>//
+        GWindow miniWindow; //<>//
+        miniWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D); //<>//
         miniWindow.addDrawHandler(this, "windowDraw");
         MyData data = new MyData();
         data.setOutput("Sorry, you must have\nat least 50 points to\nplay the mini game!");
         miniWindow.addData(data);
       }
       else {
-        gameState = 2; //Move Us to Mini Game State. //<>//
-        points.increaseP(-50); //<>//
-      } //<>//
-    }  //<>//
+        gameState = 2; //Move Us to Mini Game State.
+        points.increaseP(-50);
+      }
+    } 
     else if (activateHint.over) { //<>// //<>// //<>//
       if (points.returnPoints()<hintCost) { //<>// //<>// //<>// //<>//
          GWindow hintWindow; //<>//
@@ -251,7 +261,7 @@ void mouseClicked()
          hintWindow.addData(data);
       }
       else if (boxSelected) {
-        puzzle.p[box/9][box%9]=hint.giveHint(box, puzzle.solved);
+        puzzle.p[box/9][box%9]=hint.giveHint(box, puzzle.solved); //<>//
         points.increaseP(hintCost*(-1));
       }
       else {
@@ -261,11 +271,11 @@ void mouseClicked()
         MyData data = new MyData();
         data.setOutput("Please select a cell\nfor your hint!");
         hintWindow.addData(data);
-      } //<>//
+      }
     } 
     
       else if (autoHint.over) {
-      /*if (points.returnPoints()<hintCost) { //<>// //<>// //<>//
+      if (points.returnPoints()<hintCost) { //<>// //<>// //<>//
          GWindow hintWindow;
          hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
          hintWindow.addDrawHandler(this, "windowDraw");
@@ -273,10 +283,10 @@ void mouseClicked()
          data.setOutput("Sorry, you haven't\nearned enough points\nto receive a hint yet!\nThe current cost for a\nhint is " + hintCost + " points.");
          hintWindow.addData(data);
       }
-      else{ */
+      else{ 
          puzzle.p = hint.getHint(puzzle.p,puzzle.solved);
          points.increaseP(hintCost*(-1));
-    //  }
+      }
     } 
     
     else if (quit.over) {
@@ -383,7 +393,7 @@ void keyTyped() {
     }
 
     if (mode==0) {
-      if (input==0) {
+      if (input==0) { //<>//
          GWindow invalidInputWindow;
          invalidInputWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
          invalidInputWindow.addDrawHandler(this, "windowDraw");
@@ -393,7 +403,7 @@ void keyTyped() {
       }
       else if (sudokuBoard.checkInput(input, box, puzzle.solved)) {
         puzzle.p[box/9][box%9]=input;
-        pencilIn.update(puzzle.p); //<>//
+        pencilIn.update(puzzle.p);
         points.increaseP(10);
         boxSelected=false;
         if(sudokuBoard.checkIfWon(puzzle.p,puzzle.solved) == true){

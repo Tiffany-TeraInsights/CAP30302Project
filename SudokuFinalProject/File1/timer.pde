@@ -1,4 +1,4 @@
-class Timer {  //<>//
+class Timer {  //<>// //<>//
 
   int currentTime = 0;
   int startTime = 0;
@@ -51,7 +51,7 @@ class Timer {  //<>//
     }
     return hour + ":" + minute + ":" + second;
   }
-
+  
   float returnTime() {
     return currentTime/1000;
   }
