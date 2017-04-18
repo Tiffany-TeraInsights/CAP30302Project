@@ -7,6 +7,9 @@ gameState is used to dictate what "page" of the game we are on.
  2 is Mini Game
  */
 import processing.sound.*;
+import g4p_controls.*;
+
+GWindow window;
 int gameState = 0;
 int difficulty;
 int x;
@@ -266,7 +269,19 @@ void mouseClicked()
       gameState = 2; //Move Us to Mini Game State.
     } 
     else if (activateHint.over) {
-      //TODO
+      if (boxSelected) {
+        Hints hint = new Hints(0);
+        int insert=hint.giveHint(box, puzzle.solved);
+        puzzle.p[box/9][box%9]=insert;
+      }
+      else {
+        GWindow hintWindow;
+        hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+        hintWindow.addDrawHandler(this, "windowDraw");
+        MyData data = new MyData();
+        data.setOutput("Please select a cell\nfor your hint!");
+        hintWindow.addData(data);
+      }
     } 
     else if (quit.over) {
       setup();
@@ -287,14 +302,12 @@ void mouseClicked()
 
 
     if (sudokuBoard.overSudokuBoard() == true) {
-      //if (!boxSelected) {
       box=sudokuBoard.boxNumber();
       if (puzzle.p[box/9][box%9]==0) {
         boxSelected=true;
         x=mouseX;
         y=mouseY;
       }
-      //}
     } else {
       boxSelected=false;
     }
@@ -430,4 +443,13 @@ void keyTyped() {
       pencilIn.modify(input, box);
     }
   }
+}
+
+void windowDraw(PApplet app, GWinData data){
+  MyData myData = (MyData) data;
+  app.background(255);
+  app.strokeWeight(2);
+  app.fill(0);
+  app.textSize(30);
+  app.text(myData.output, 10, 60);
 }
