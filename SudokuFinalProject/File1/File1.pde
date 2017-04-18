@@ -68,14 +68,14 @@ void setup() {
   gambleReward = "";
   
   //CREATE BUTTONS
-  B3 = new Button(200, 70, 90, 365, "Easy", #1CE86F, #1EBC5E, #1B7941, #FCFFFD);
+  color returnInside = color(#F7F7F7, 150);
+  B3 = new Button(200, 70, 90, 365, "Easy", returnInside, 0, #F7F7F7, #0F0F0E);
   B4 = new Button(200, 70, 310, 365, "Hard", #D33526, #BF3023, #933128, #FCFFFD);
   wheelGame = new Button(100, 30, 475, 200, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit2 = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit3 = new Button(100,30,300,400,"",#458B86, #68AFB2, #156164, #C2CECE); 
   activateHint = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
-  color returnInside = color(#F7F7F7, 150);
   returnSudoku = new Button(100, 30, 250, 340, "", returnInside, 0, #F7F7F7, #0F0F0E);
   pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
   mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
@@ -420,8 +420,10 @@ void windowDraw(PApplet app, GWinData data){
 
 void menuBackground() {
   background(#B87E3E);
-  PImage image = loadImage("SudokuMainPic.jpg");
-  image(image, width/4, height/8);
+  PImage startBackground = loadImage("ZenGarden1.jpg");
+  PImage image = loadImage("SudokuTitle.png");
+  image(startBackground, -100, -115);
+  image(image, width/4, height/4);
 }
 
 void gameBackground() {
