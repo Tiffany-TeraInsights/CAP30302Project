@@ -75,6 +75,6 @@ class spinner
   //Returns a value to beginning spinning the spinner.
   int spin(float value)
   {
-    return (int)(value * 20);
+    return (int)(value * 2);
   }
 }
