@@ -6,183 +6,128 @@ gameState is used to dictate what "page" of the game we are on.
  1 is Sudoku Game
  2 is Mini Game
  */
+ 
 import processing.sound.*;
 import g4p_controls.*;
 
-GWindow window;
-int gameState = 0;
-int difficulty;
+Puzzle puzzle;
+PencilIn pencilIn;
+Points points;
+Errors errors;
+int gameState;
+int mode;
+int hintCost;
+
+Board sudokuBoard;
 int x;
 int y;
 int box;
-boolean boxSelected=false;
+boolean boxSelected;
+
+Timer Time;
+String hour, minute, second;
+
+minigame fortuneWheel;
+int powerBarStrength;
+boolean oneSpin;
+boolean checkRewardOnce;
+String gambleReward;
+
 Button B3;
 Button B4;
-String hour, minute, second;
-Board sudokuBoard;
 Button wheelGame;
-Button quit;
-Button quit2, quit3;
+Button quit, quit2, quit3;
 Button activateHint;
-Timer Time;
-Puzzle puzzle;
-PencilIn pencilIn;
-boolean inputMode = false;
-Points points;
-Errors errors;
-Hints hints;
-int powerBarStrength = 105; //Beginning value for power bar.
-minigame fortuneWheel = new minigame(200);
-boolean oneSpin = true;
-boolean checkRewardOnce = true;
 Button returnSudoku;
-String gambleReward = "";
 Button pencil;
 Button mark;
-int mode = 0;
+
 SoundFile backgroundMusic;
 
 void setup() {
   size(600, 450);
   background(#B87E3E);
-  Time = new Timer();
+  
   puzzle=new Puzzle();
-  pencilIn=new PencilIn(puzzle.p);
+  pencilIn=new PencilIn();
   points = new Points();
   errors = new Errors();
-   //CREATE BUTTONS
+  gameState=0;
+  mode=0;
+  hintCost=100;
+  
+  sudokuBoard = new Board();
+  boxSelected=false;
+
+  Time = new Timer();
+
+  fortuneWheel = new minigame(200);
+  powerBarStrength = 105; //Beginning value for power bar.
+  oneSpin = true;
+  checkRewardOnce = true;
+  gambleReward = "";
+  
+  //CREATE BUTTONS
   B3 = new Button(200, 70, 90, 365, "Easy", #1CE86F, #1EBC5E, #1B7941, #FCFFFD);
   B4 = new Button(200, 70, 310, 365, "Hard", #D33526, #BF3023, #933128, #FCFFFD);
   wheelGame = new Button(100, 30, 475, 200, "", #458B86, #68AFB2, #156164, #C2CECE);
-  activateHint = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
-  mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
-  pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
+  quit2 = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
+  quit3 = new Button(100,30,300,400,"",#458B86, #68AFB2, #156164, #C2CECE); 
+  activateHint = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   returnSudoku = new Button(100, 30, 250, 400, "", #E56E1E, #863A07, #FC8608, #0F0F0E);
+  pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
+  mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
+  
   //backgroundMusic = new SoundFile(this, "background music.mp3");
   //backgroundMusic.loop();
 }
 
 void draw() {
-  
   if (gameState == 0) //If we're in the menu.
   {
-    background(#B87E3E);
-
-    //Background image stuff
-    PImage image = loadImage("SudokuMainPic.jpg");
-    image(image, width/4, height/8);
-
-   
-    //Update buttons
+    menuBackground();
     B3.update();
     B4.update();
-  } else if (gameState == 1) //Sudoku Puzzle.
-  { 
-    //Keep background color the same.
-    background(#B87E3E);
-
-    // Realistic Bamboo Background.
-    //Draw Sudoku Background
-    PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg");
-    image(mainWoodBackground, 0, 0);
-
-    sudokuBoard = new Board();
+  } 
+  else if (gameState == 1) //Sudoku Puzzle.
+  {     
+    gameBackground();
     sudokuBoard.drawBoard();
     sudokuBoard.showNumbers(puzzle.p);
     sudokuBoard.showPencil(pencilIn.pencil);
     if (boxSelected) {
       sudokuBoard.drawCursor(x, y);
     }
-
-    //Shadow of side menu
-    fill(0);
-    noStroke();
-    rectMode(CORNERS);
-    rect(445, 0, 600, 600);
-
-    //Draw Side Menu Background
-    PImage sideMenuBackground = loadImage("Side Menu Bamboo.jpg");
-    image(sideMenuBackground, 450, -180);
-
-    rectMode(CORNER);
-
-    wheelGame.isOver();
-    wheelGame.update();
-    textSize(14);
-    fill(255);
-    textAlign(LEFT);
-    text("Mini Game", 480, 220);
-
-   
-
-    //activateHint
-    activateHint.isOver();
-    activateHint.update();
-    textSize(14);
-    fill(255);
-    textAlign(LEFT);
-    text("Hint", 480, 270);
-
+    sideMenu();
     
-    mark.isOver();
+    rectMode(CORNER);
+    wheelGame.update();
+    formatButton("Mini Game", 480, 220); 
+    
+    activateHint.update();
+    formatButton("Hint", 480, 270);
+
     mark.update();
-    textSize(14);
-    fill(255);
-    textAlign(LEFT);
-    text("Mark", 480, 320);
+    formatButton("Mark", 480, 320);
 
-  
-    pencil.isOver();
     pencil.update();
-    textSize(14);
-    fill(255);
-    textAlign(LEFT);
-    text("Pencil", 480, 370);
-
-    //quit
-    quit.isOver();
+    formatButton("Pencil", 480, 370);
 
     quit.update();
-    textSize(14);
-    fill(255);
-    textAlign(LEFT);
-    text("Quit", 480, 420);
+    formatButton("Quit", 480, 420);
 
     Time.advance();
     textSize(20);
     fill(255);
-    
-    if(Time.hour() < 10){
-      hour = "0" + Time.hour(); 
-    }
-    else if(Time.hour() >= 10){
-     hour = "" + Time.hour(); 
-    }
-    
-    if(Time.minute() < 10){
-      minute = "0" + Time.minute(); 
-    }
-    else if(Time.minute() >= 10){
-      minute = "" + Time.minute(); 
-    }
-    
-    if(Time.second() < 10){
-      second = "0" + Time.second();
-    }
-    else if(Time.second() >= 10){
-     second = "" + Time.second(); 
-    }
-     
-    text(hour + ":" + minute + ":" + second, 480, 100);
+    text(Time.convertToString(), 480, 100);
 
-
-    //Score
     textSize(16);
     fill(255);
     text("Score: " + points.returnPoints(), 460, 150);
-    text("Errors: " + errors.returnErrors(), 460, 180);
-  } else if (gameState == 2) {
+    text("Errors: " + errors.returnErrors(), 460, 180);  
+  } 
+  else if (gameState == 2) {
     fortuneWheel.display();
 
     rectMode(CORNER);
@@ -196,7 +141,7 @@ void draw() {
         points.tripleP();
       }
       else if(gambleReward == "ORANGE"){
-        //halve hint cost
+        hintCost=50;
       }
       else if(gambleReward == "BLUE"){
         errors.increaseE();
@@ -208,7 +153,7 @@ void draw() {
         points.zero();
       }
       else if(gambleReward == "PURPLE"){
-         //double hint cost
+        hintCost=200;
       }
       else if(gambleReward == "LIME"){
         errors.setToOne();
@@ -235,44 +180,68 @@ void draw() {
       text("Return", 260, 425);
     }
   }
+  else if (gameState == 3) {
+    gameOverBackground();
+    quit2.update();
+    formatButton("Quit", 480, 420);
+  }
+  else if(gameState == 4){
+    youWonBackground();
+    quit3.update();
+    formatButton("Return To Menu",300,410);
+  }
 }
 
 void mouseClicked()
 {
   if (gameState == 0) //Only occurs when in the Main Menu
   {
-    B3.isOver();
-    B4.isOver();
+    puzzle.createSolved();
+    gameState = 1; //Bring us to Sudoku.
     if (B3.over) //If mouse if over button
     {
-      difficulty=0;
       puzzle.easy();
-      gameState = 1; //Bring us to Sudoku.
-    } else if (B4.over) //If mouse is over button
+      pencilIn.create(puzzle.p);
+    } 
+    else if (B4.over) //If mouse is over button
     {
-      difficulty=1;
       puzzle.hard();
-      gameState = 1; //Bring us to Sudoku.
+      pencilIn.create(puzzle.p);
     } else
     {
       //Do Nothing
     }
-  } else if (gameState == 1) //If we're in Sudoku.
+  } 
+  else if (gameState == 1) //If we're in Sudoku.
   {
-    wheelGame.isOver();
-    activateHint.isOver();
-    quit.isOver();
-    pencil.isOver();
-    mark.isOver();
     if (wheelGame.over) //If the mouse is over the button.
     {
-      gameState = 2; //Move Us to Mini Game State.
+      if (points.returnPoints()<50) {
+        GWindow miniWindow;
+        miniWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+        miniWindow.addDrawHandler(this, "windowDraw");
+        MyData data = new MyData();
+        data.setOutput("Sorry, you must have\nat least 50 points to\nplay the mini game!");
+        miniWindow.addData(data);
+      }
+      //else {
+        gameState = 2; //Move Us to Mini Game State.
+       // points.increaseP(-50);
+      //}
     } 
     else if (activateHint.over) {
-      if (boxSelected) {
-        Hints hint = new Hints(0);
-        int insert=hint.giveHint(box, puzzle.solved);
-        puzzle.p[box/9][box%9]=insert;
+      if (points.returnPoints()<hintCost) {
+         GWindow hintWindow;
+         hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+         hintWindow.addDrawHandler(this, "windowDraw");
+         MyData data = new MyData();
+         data.setOutput("Sorry, you haven't\nearned enough points\nto receive a hint yet!\nThe current cost for a\nhint is " + hintCost + " points.");
+         hintWindow.addData(data);
+      }
+      else if (boxSelected) {
+        Hints hint = new Hints(hintCost);
+        puzzle.p[box/9][box%9]=hint.giveHint(box, puzzle.solved);
+        points.increaseP(hintCost*(-1));
       }
       else {
         GWindow hintWindow;
@@ -284,82 +253,50 @@ void mouseClicked()
       }
     } 
     else if (quit.over) {
-      setup();
+      resetGame();
       gameState = 0;
     } 
     else if (mark.over) {
       mode = 0;
       pencil.selected = false;
       mark.selected = true;
-      println("mark");
     } 
     else if (pencil.over) {
       mode = 1;
       mark.selected = false;
       pencil.selected = true;
-      println("pencil");
     }
-
-
-    if (sudokuBoard.overSudokuBoard() == true) {
+    else if (sudokuBoard.overSudokuBoard() == true) {
       box=sudokuBoard.boxNumber();
       if (puzzle.p[box/9][box%9]==0) {
         boxSelected=true;
         x=mouseX;
         y=mouseY;
       }
-    } else {
+    } 
+    else {
       boxSelected=false;
     }
-  } else if (gameState == 2)
+  } 
+  else if (gameState == 2)
   {
-    returnSudoku.isOver();
     if (returnSudoku.over)
     {
       gameState = 1;
-
-      //Reset all of minigame.
-      oneSpin = true;
-      checkRewardOnce = true;
-      fortuneWheel.resetValues();
+      resetMiniGame();
     }
-  } else if (gameState == 3) {
-    background(0);
-    PImage loseBackground = loadImage("youjustlost.jpg");
-    image(loseBackground, 100, 25);
-
-    quit2 = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
-    quit2.isOver();
-
-    quit2.update();
-    textSize(14);
-    fill(255);
-    textAlign(LEFT);
-    text("Quit", 480, 420);
-
+  } 
+  else if (gameState == 3) {
     if (quit2.over) {
-      System.out.println(Time.returnTime());
       gameState = 0;
+      resetGame();
     }
   }
   else if(gameState == 4){
-   background(0);
-   PImage winBackground = loadImage("youwon.jpg");
-   image(winBackground,0,0);
-   
-   quit3 = new Button(100,30,300,400,"",#458B86, #68AFB2, #156164, #C2CECE); 
-   quit3.update();
-   
-   textSize(14);
-   fill(255);
-   textAlign(LEFT);
-   text("Return To Menu",300,410);
-   
-   if(quit2.over){
-     gameState = 0; 
-   }
-    
-    
+    if(quit2.over){
+       gameState = 0; 
+       resetGame();
+    }
   }
 }
 
@@ -377,12 +314,6 @@ void keyPressed()
         fortuneWheel.setDrawPower(powerBarStrength); //Update Power.
       }
     }
-  }
-  if (gameState == 1) {
-    /* if(inputMode && m[rowNum][colNum] == 0 && key>='0' && key<='9') {
-     m[rowNum][colNum] = key - '0'; // '0'
-     inputMode = false;
-     } */
   }
 }
 
@@ -425,7 +356,15 @@ void keyTyped() {
     }
 
     if (mode==0) {
-      if (sudokuBoard.checkInput(input, box, puzzle.solved)) {
+      if (input==0) {
+         GWindow invalidInputWindow;
+         invalidInputWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+         invalidInputWindow.addDrawHandler(this, "windowDraw");
+         MyData data = new MyData();
+         data.setOutput("Please enter only\nnumbers 1 through 9.");
+         invalidInputWindow.addData(data);
+      }
+      else if (sudokuBoard.checkInput(input, box, puzzle.solved)) {
         puzzle.p[box/9][box%9]=input;
         pencilIn.update(puzzle.p);
         points.increaseP(10);
@@ -433,16 +372,40 @@ void keyTyped() {
         if(sudokuBoard.checkIfWon(puzzle.p,puzzle.solved) == true){
           gameState = 4; //<>//
         }
-      } else {
+      } 
+      else {
         errors.decreaseE();
+        if(errors.totalErrors!=0) {
+          GWindow errorWindow;
+          errorWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+          errorWindow.addDrawHandler(this, "windowDraw");
+          MyData data = new MyData();
+          data.setOutput("Sorry, that's not the\ncorrect number for\nthis cell.\nErrors remaining: "+errors.totalErrors);
+          errorWindow.addData(data);
+        }
+        else {
+          gameState=3;
+        }
       }
-      if (errors.returnErrors() == 0) {
-        gameState = 3;
-      }
-    } else if (mode==1) {
+    } 
+    else if (mode==1) {
       pencilIn.modify(input, box);
     }
   }
+}
+
+void resetGame() {
+  Time.reset();
+  points.reset();
+  errors.resetE();
+  boxSelected=false;
+  hintCost=100;
+}
+
+void resetMiniGame() {
+  oneSpin = true;
+  checkRewardOnce = true;
+  fortuneWheel.resetValues();
 }
 
 void windowDraw(PApplet app, GWinData data){
@@ -450,6 +413,46 @@ void windowDraw(PApplet app, GWinData data){
   app.background(255);
   app.strokeWeight(2);
   app.fill(0);
-  app.textSize(30);
-  app.text(myData.output, 10, 60);
+  app.textSize(25);
+  app.text(myData.output, 10, 40);
+}
+
+void menuBackground() {
+  background(#B87E3E);
+  PImage image = loadImage("SudokuMainPic.jpg");
+  image(image, width/4, height/8);
+}
+
+void gameBackground() {
+  background(#B87E3E);
+  PImage mainWoodBackground = loadImage("Bamboo Texture 2.jpg");
+  image(mainWoodBackground, 0, 0);
+}
+
+void gameOverBackground() {
+  background(0);
+  PImage loseBackground = loadImage("youjustlost.jpg");
+  image(loseBackground, 100, 25);
+}
+
+void youWonBackground() {
+  background(0);
+  PImage winBackground = loadImage("youwon.jpg");
+  image(winBackground,0,0);
+}
+
+void sideMenu() {
+  fill(0);
+  noStroke();
+  rectMode(CORNERS);
+  rect(445, 0, 600, 600);
+  PImage sideMenuBackground = loadImage("Side Menu Bamboo.jpg");
+  image(sideMenuBackground, 450, -180);
+}
+
+void formatButton(String name, int px, int py) {
+  textSize(14);
+  fill(255);
+  textAlign(LEFT);
+  text(name, px, py);  
 }

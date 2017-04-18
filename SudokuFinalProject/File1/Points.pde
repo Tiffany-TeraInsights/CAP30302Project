@@ -2,6 +2,10 @@ class Points {
   
   int totalPoints = 0;
   
+  void reset() {
+    totalPoints=0;
+  }
+  
   void increaseP(int value){
     totalPoints += value;
   }
