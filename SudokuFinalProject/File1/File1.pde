@@ -1,4 +1,4 @@
-//Project Yo //<>// //<>// //<>//
+//Project Yo //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 //Added change
 /*
 gameState is used to dictate what "page" of the game we are on.
@@ -6,7 +6,7 @@ gameState is used to dictate what "page" of the game we are on.
  1 is Sudoku Game
  2 is Mini Game
  */
- 
+
 import processing.sound.*;
 import g4p_controls.*;
 
@@ -15,7 +15,7 @@ PencilIn pencilIn;
 Points points;
 Errors errors;
 Hints hint;
-HighScores hs;
+HighScores hs = new HighScores();
 int gameState;
 int mode;
 int hintCost;
@@ -53,17 +53,16 @@ SoundFile clickSound;
 void setup() {
   size(600, 450);
   background(#B87E3E);
-  
+
   puzzle=new Puzzle();
   pencilIn=new PencilIn();
   points = new Points();
   errors = new Errors();
   hint = new Hints(100);
-  hs = new HighScores();
   gameState=0;
   mode=0;
   hintCost=100;
-  
+
   sudokuBoard = new Board();
   boxSelected=false;
 
@@ -74,7 +73,7 @@ void setup() {
   oneSpin = true;
   checkRewardOnce = true;
   gambleReward = "";
-  
+
   //CREATE BUTTONS
   color returnInside = color(#F7F7F7, 150);
   B3 = new Button(200, 70, 90, 365, "Easy", returnInside, 0, #F7F7F7, #0F0F0E);
@@ -82,7 +81,7 @@ void setup() {
   wheelGame = new Button(100, 30, 475, 180, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit2 = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
-  quit3 = new Button(100,30,300,400,"",#458B86, #68AFB2, #156164, #C2CECE); 
+  quit3 = new Button(150, 30, 230, 400, "", #458B86, #68AFB2, #156164, #C2CECE); 
   activateHint = new Button(60, 30, 400, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   autoHint = new Button(60, 30, 530, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   returnSudoku = new Button(100, 30, 250, 400, "", #E56E1E, #863A07, #FC8608, #0F0F0E);
@@ -90,7 +89,7 @@ void setup() {
   returnSudoku = new Button(100, 30, 250, 340, "", returnInside, 0, #F7F7F7, #0F0F0E);
   pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
   mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
-  
+
   clickSound = new SoundFile(this, "ClickSound.mp3");
   backgroundMusic = new SoundFile(this, "background music.mp3");
   backgroundMusic.loop();
@@ -100,11 +99,15 @@ void draw() {
   if (gameState == 0) //If we're in the menu.
   {
     menuBackground();
+    text("Best Score:", 200, 50);
+    text(hs.returnHighScores(),200,80);
     B3.update();
     B4.update();
-  } 
-  else if (gameState == 1) //Sudoku Puzzle.
+  } else if (gameState == 1) //Sudoku Puzzle.
   {     
+
+    checkIfDone();
+    
     gameBackground();
     sudokuBoard.drawBoard();
     sudokuBoard.showNumbers(puzzle.p);
@@ -113,14 +116,14 @@ void draw() {
       sudokuBoard.drawCursor(x, y);
     }
     sideMenu();
-    
+
     rectMode(CORNER);
     wheelGame.update();
     formatButton("Mini Game", 480, 200); 
-    
+
     activateHint.update();
     formatButton("Pick", 490, 270);
-    
+
     autoHint.update();
     formatButton("Auto", 544, 270);
 
@@ -142,38 +145,31 @@ void draw() {
     fill(255);
     text("Score: " + points.returnPoints(), 460, 110);
     text("Errors: " + errors.returnErrors(), 460, 140);  
-    text("Game Cost: " + 50 , 467, 170);
+    text("Game Cost: " + 50, 467, 170);
     text("Hint Cost: " + hint.returnHintCost(), 470, 240);
-  } 
-  else if (gameState == 2) {
+    
+  } else if (gameState == 2) {
     fortuneWheel.display();
 
     rectMode(CORNER);
     if (fortuneWheel.doneSpinning() && checkRewardOnce)
     {
       gambleReward = fortuneWheel.getReward();
-      if(gambleReward == "TEAL"){
+      if (gambleReward == "TEAL") {
         points.doubleP();
-      }
-      else if(gambleReward == "MAGENTA"){
+      } else if (gambleReward == "MAGENTA") {
         points.tripleP();
-      }
-      else if(gambleReward == "ORANGE"){
+      } else if (gambleReward == "ORANGE") {
         hintCost=50;
-      }
-      else if(gambleReward == "BLUE"){
+      } else if (gambleReward == "BLUE") {
         errors.increaseE();
-      }
-      else if(gambleReward == "RED"){
+      } else if (gambleReward == "RED") {
         points.halveP();
-      }
-      else if(gambleReward == "GREEN"){
+      } else if (gambleReward == "GREEN") {
         points.zero();
-      }
-      else if(gambleReward == "PURPLE"){
+      } else if (gambleReward == "PURPLE") {
         hintCost=200;
-      }
-      else if(gambleReward == "LIME"){
+      } else if (gambleReward == "LIME") {
         errors.setToOne();
       }
       checkRewardOnce = false;
@@ -197,18 +193,31 @@ void draw() {
       textSize(20);
       text("Return", 267, 363);
     }
-  }
-  else if (gameState == 3) {
+  } else if (gameState == 3) {
     gameOverBackground();
     quit2.update();
     formatButton("Quit", 480, 420);
-  }
-  else if(gameState == 4){
-    
+  } else if (gameState == 4) {
     youWonBackground();
     quit3.update();
-    formatButton("Return To Menu",300,410);
+    formatButton("Return To Menu", 250, 420);
   }
+}
+
+void checkIfDone(){
+     int count = 0;
+    for (int i = 0; i < 9; ++i) {
+      for (int j = 0; j < 9; ++j) {
+        if (puzzle.p[i][j] == puzzle.solved[i][j]) {
+          count++;
+        }
+      }
+    }
+    
+    if(count == 81){
+      hs.addHighScore(Time.getCurrentTime());
+      gameState = 4; 
+    } 
 }
 
 void mouseClicked()
@@ -223,8 +232,7 @@ void mouseClicked()
       puzzle.easy();
       pencilIn.create(puzzle.p);
       gameState = 1; //Bring us to Sudoku.
-    } 
-    else if (B4.over) //If mouse is over button
+    } else if (B4.over) //If mouse is over button
     {
       puzzle.hard();
       pencilIn.create(puzzle.p);
@@ -233,110 +241,96 @@ void mouseClicked()
     {
       //Do Nothing
     }
-  } 
-  else if (gameState == 1) //If we're in Sudoku.
+  } else if (gameState == 1) //If we're in Sudoku.
   {
-    if(puzzle.p == puzzle.solved){
-      hs.addHighScore(Time.getCurrentTime()); //<>//
-      gameState = 4; //<>//
-    } //<>//
-    else if (wheelGame.over) //If the mouse is over the button. //<>//
-    { //<>//
-      if (points.returnPoints()<50) { //<>//
-        GWindow miniWindow; //<>//
-        miniWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D); //<>//
+    //<>// //<>//
+    if (wheelGame.over) //If the mouse is over the button.
+    {
+      if (points.returnPoints()<50) {
+        GWindow miniWindow;
+        miniWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
         miniWindow.addDrawHandler(this, "windowDraw");
         MyData data = new MyData();
         data.setOutput("Sorry, you must have\nat least 50 points to\nplay the mini game!");
         miniWindow.addData(data);
+      } else {
+        gameState = 2; //Move Us to Mini Game State.
+        points.increaseP(-50);
       }
-      else {
-        gameState = 2; //Move Us to Mini Game State. //<>//
-        points.increaseP(-50); //<>//
-      } //<>//
-    }  //<>//
-    else if (activateHint.over) { //<>// //<>// //<>//
-      if (points.returnPoints()<hintCost) { //<>// //<>// //<>// //<>//
-         GWindow hintWindow; //<>//
-         hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D); //<>//
-         hintWindow.addDrawHandler(this, "windowDraw");
-         MyData data = new MyData();
-         data.setOutput("Sorry, you haven't\nearned enough points\nto receive a hint yet!\nThe current cost for a\nhint is " + hintCost + " points."); //<>//
-         hintWindow.addData(data);
-      }
-      else if (boxSelected) {
-        puzzle.p[box/9][box%9]=hint.giveHint(box, puzzle.solved); //<>//
+    } else if (activateHint.over) { //<>// //<>//
+      if (points.returnPoints()<hintCost) { //<>// //<>// //<>//
+        GWindow hintWindow;
+        hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+        hintWindow.addDrawHandler(this, "windowDraw");
+        MyData data = new MyData();
+        data.setOutput("Sorry, you haven't\nearned enough points\nto receive a hint yet!\nThe current cost for a\nhint is " + hintCost + " points.");
+        hintWindow.addData(data);
+      } else if (boxSelected) {
+        puzzle.p[box/9][box%9]=hint.giveHint(box, puzzle.solved);
         points.increaseP(hintCost*(-1));
-      }
-      else {
+      } else {
         GWindow hintWindow;
         hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
         hintWindow.addDrawHandler(this, "windowDraw");
         MyData data = new MyData();
         data.setOutput("Please select a cell\nfor your hint!");
         hintWindow.addData(data);
-      } //<>//
-    } 
-    
-      else if (autoHint.over) {
-      if (points.returnPoints()<hintCost) { //<>// //<>// //<>//
-         GWindow hintWindow;
-         hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
-         hintWindow.addDrawHandler(this, "windowDraw");
-         MyData data = new MyData();
-         data.setOutput("Sorry, you haven't\nearned enough points\nto receive a hint yet!\nThe current cost for a\nhint is " + hintCost + " points.");
-         hintWindow.addData(data);
       }
-      else{ 
-         puzzle.p = hint.getHint(puzzle.p,puzzle.solved);
-         points.increaseP(hintCost*(-1));
+    } else if (autoHint.over) {
+      if (points.returnPoints()<hintCost) { //<>// //<>//
+       GWindow hintWindow;
+       hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+       hintWindow.addDrawHandler(this, "windowDraw");
+       MyData data = new MyData();
+       data.setOutput("Sorry, you haven't\nearned enough points\nto receive a hint yet!\nThe current cost for a\nhint is " + hintCost + " points.");
+       hintWindow.addData(data);
+       }
+       else{ 
+      puzzle.p = hint.getHint(puzzle.p, puzzle.solved);
+      if (puzzle.p == puzzle.solved) {
+        System.out.println("Solved");
+      } else {
+        System.out.println("Not Solved");
       }
-    } 
-    
-    else if (quit.over) {
+      points.increaseP(hintCost*(-1));
+       }
+    } else if (quit.over) {
       resetGame();
       gameState = 0;
-    } 
-    else if (mark.over) {
+    } else if (mark.over) {
       mode = 0;
       pencil.selected = false;
       mark.selected = true;
-    } 
-    else if (pencil.over) {
+    } else if (pencil.over) {
       mode = 1;
       mark.selected = false;
       pencil.selected = true;
-    }
-    else if (sudokuBoard.overSudokuBoard() == true) {
+    } else if (sudokuBoard.overSudokuBoard() == true) {
       box=sudokuBoard.boxNumber();
       if (puzzle.p[box/9][box%9]==0) {
         boxSelected=true;
         x=mouseX;
         y=mouseY;
       }
-    } 
-    else {
+    } else {
       boxSelected=false;
     }
-  } 
-  else if (gameState == 2)
+  } else if (gameState == 2)
   {
     if (returnSudoku.over)
     {
       gameState = 1;
       resetMiniGame();
     }
-  } 
-  else if (gameState == 3) {
+  } else if (gameState == 3) {
     if (quit2.over) {
       gameState = 0;
       resetGame();
     }
-  }
-  else if(gameState == 4){
-    if(quit2.over){
-       gameState = 0; 
-       resetGame();
+  } else if (gameState == 4) {
+    if (quit3.over) {
+      gameState = 0; 
+      resetGame();
     }
   }
 }
@@ -393,43 +387,39 @@ void keyTyped() {
     } else if (key=='8') {
       input=8;
     } else if (key=='9') {
-      input=9; //<>//
+      input=9;
     }
 
     if (mode==0) {
-      if (input==0) { //<>//
-         GWindow invalidInputWindow;
-         invalidInputWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
-         invalidInputWindow.addDrawHandler(this, "windowDraw");
-         MyData data = new MyData();
-         data.setOutput("Please enter only\nnumbers 1 through 9.");
-         invalidInputWindow.addData(data);
-      }
-      else if (sudokuBoard.checkInput(input, box, puzzle.solved)) {
+      if (input==0) {
+        GWindow invalidInputWindow;
+        invalidInputWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
+        invalidInputWindow.addDrawHandler(this, "windowDraw");
+        MyData data = new MyData();
+        data.setOutput("Please enter only\nnumbers 1 through 9.");
+        invalidInputWindow.addData(data);
+      } else if (sudokuBoard.checkInput(input, box, puzzle.solved)) {
         puzzle.p[box/9][box%9]=input;
-        pencilIn.update(puzzle.p); //<>//
+        pencilIn.update(puzzle.p);
         points.increaseP(10);
         boxSelected=false;
-        if(sudokuBoard.checkIfWon(puzzle.p,puzzle.solved) == true){
-          gameState = 4; //<>//
+        if (sudokuBoard.checkIfWon(puzzle.p, puzzle.solved) == true) {
+          gameState = 4;
         }
-      } 
-      else {
+      } else {
         errors.decreaseE();
-        if(errors.totalErrors!=0) {
+        if (errors.totalErrors!=0) {
           GWindow errorWindow;
           errorWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
           errorWindow.addDrawHandler(this, "windowDraw");
           MyData data = new MyData();
           data.setOutput("Sorry, that's not the\ncorrect number for\nthis cell.\nErrors remaining: "+errors.totalErrors);
           errorWindow.addData(data);
-        }
-        else {
+        } else {
           gameState=3;
         }
       }
-    } 
-    else if (mode==1) {
+    } else if (mode==1) {
       pencilIn.modify(input, box);
     }
   }
@@ -449,7 +439,7 @@ void resetMiniGame() {
   fortuneWheel.resetValues();
 }
 
-void windowDraw(PApplet app, GWinData data){
+void windowDraw(PApplet app, GWinData data) {
   MyData myData = (MyData) data;
   app.background(255);
   app.strokeWeight(2);
@@ -480,8 +470,8 @@ void gameOverBackground() {
 
 void youWonBackground() {
   background(0);
-  PImage winBackground = loadImage("youwon.jpg");
-  image(winBackground,0,0);
+  PImage winBackground = loadImage("youwin.png");
+  image(winBackground, 150,25,300,300);
 }
 
 void sideMenu() {
@@ -497,5 +487,5 @@ void formatButton(String name, int px, int py) {
   textSize(14);
   fill(255);
   textAlign(LEFT);
-  text(name, px, py);  
+  text(name, px, py);
 }

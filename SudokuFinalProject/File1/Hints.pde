@@ -27,9 +27,9 @@ class Hints { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<
     while (numOfPoss > 2) {
       randomRow = (int)random(0, 9);
       randomColumn = (int)random(0, 9);
-      numOfPoss = generatePossibilityMatrix(puzzleUnsolved, randomRow, randomColumn);
-      System.out.println("NumOfPoss " + numOfPoss);
-    }
+      numOfPoss = generatePossibilityMatrix(puzzleUnsolved, randomRow, randomColumn);  
+  }
+    
     puzzleUnsolved[randomRow][randomColumn] = puzzleSolved[randomRow][randomColumn];
     return puzzleUnsolved;
   }

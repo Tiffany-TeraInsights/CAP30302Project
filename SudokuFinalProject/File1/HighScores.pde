@@ -1,10 +1,20 @@
 class HighScores {
   
   float list[];
-  String readableList[];
+  float[] readableList;
   
-  void addHighScore(float time){
-    append(list,time);
+  void addHighScore(float time){ //<>//
+    int i = 0; //<>//
+    while (readableList[i] != 0){ //<>//
+     ++i;  //<>//
+    } //<>//
+    readableList[i] = time; //<>//
+    
+    i = 0;
+    while (readableList[i] != 0){ //<>//
+      System.out.println(readableList[i]); //<>//
+     ++i;  //<>//
+    } //<>//
   }
   
   int seconds(float currentTime) {
@@ -40,17 +50,21 @@ class HighScores {
     return hour + ":" + minute + ":" + second;
   }
   
-  String[] returnHighScores(){
+  String returnHighScores(){
  
-    for(int i = 0; i < list.length; ++i){
-      append(readableList, convertToString(list[i]));
+    float smallest = readableList[0];
+    for(int i = 0; i < readableList.length; ++i){
+      if(readableList[i] < smallest && readableList[i] != 0){
+        smallest = readableList[i];
+      }
     }
-    return readableList;
+    return convertToString(smallest);
   }
+
   
  
   HighScores(){
-    
+    readableList = new float[50];
   }
   
 }
