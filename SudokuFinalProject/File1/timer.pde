@@ -1,20 +1,24 @@
-class Timer {  //<>// //<>//
+class Timer {  //<>// //<>// //<>//
 
   int currentTime = 0;
   int startTime = 0;
 
-
+  // create timer
   Timer() {
     startTime = millis();
   }
-
+  
+  //reset timer
   void reset() {
     startTime=millis();
   }
   
+  //increase timer
   void advance() {
     currentTime = millis() - startTime;
   } 
+  
+  //return current timer amount
   int getCurrentTime() {
     return currentTime;
   }
@@ -29,6 +33,7 @@ class Timer {  //<>// //<>//
     return (int)(getCurrentTime() / (1000*60*60)) % 24;
   }
   
+  //convert millis to string value (format it)
   String convertToString() {
     String hour, minute, second;
     if(Time.hour() < 10){
@@ -51,7 +56,8 @@ class Timer {  //<>// //<>//
     }
     return hour + ":" + minute + ":" + second;
   }
-  
+ 
+  //return the current time
   float returnTime() {
     return currentTime/1000;
   }

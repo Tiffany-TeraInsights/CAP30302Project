@@ -3,20 +3,22 @@ class HighScores {
   float list[];
   float[] readableList;
   
-  void addHighScore(float time){ //<>//
-    int i = 0; //<>//
-    while (readableList[i] != 0){ //<>//
-     ++i;  //<>//
-    } //<>//
+  //add a high score to the list //<>//
+  void addHighScore(float time){ //<>// //<>//
+    int i = 0; //<>// //<>//
+    while (readableList[i] != 0){ //<>// //<>//
+     ++i;  //<>// //<>//
+    } //<>// //<>//
     readableList[i] = time; //<>//
     
-    i = 0;
-    while (readableList[i] != 0){ //<>//
-      System.out.println(readableList[i]); //<>//
-     ++i;  //<>//
+    i = 0; //<>//
+    while (readableList[i] != 0){ //<>// //<>//
+      System.out.println(readableList[i]); //<>// //<>//
+     ++i;  //<>// //<>//
     } //<>//
   }
   
+  //format the millis time
   int seconds(float currentTime) {
     return (int)(currentTime/ 1000) % 60;
   }
@@ -27,6 +29,7 @@ class HighScores {
     return (int)(currentTime / (1000*60*60)) % 24;
   }
  
+ //converts the millis time to string
   String convertToString(float time) {
     String hour, minute, second;
     if(hours(time) < 10){
@@ -50,6 +53,7 @@ class HighScores {
     return hour + ":" + minute + ":" + second;
   }
   
+  //return the best score in a string format
   String returnHighScores(){
  
     float smallest = readableList[0];

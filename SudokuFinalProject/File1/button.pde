@@ -9,7 +9,7 @@ class Button {
   boolean over, clicked;
   boolean selected = false;
 
-
+  // a function to see if the mouse is over the button, if over == true, the button was clicked
   void isOver() {
     if ((mouseX > (positionX) && mouseX < (bwidth + positionX)) && ((mouseY > (positionY)) && (mouseY < (bheight + positionY)))) {
       current = pressed;
@@ -20,14 +20,15 @@ class Button {
     }
   }
 
+  // displays the button
   void update() {
 
     isOver();
 
-    if (selected == true) {
-      fill(current); //<>//
+    if (selected == true) { //<>//
+      fill(current); //<>// //<>//
       stroke(#F70000); //<>//
-
+ //<>//
       rect(positionX, positionY, bwidth, bheight); //<>//
       fill(textColor);
       stroke(textColor);
