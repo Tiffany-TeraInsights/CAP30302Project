@@ -1,14 +1,15 @@
-class Hints { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+class Hints { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 
   int hintCost;
   int[][] possibilityMatrix;
   int randomRow;
   int randomColumn;
 
+  // return the cost of a hint
   int returnHintCost() {
     return hintCost;
   }
-
+  //change the hint cost
   void changeHintCost(float multiplier) {
     hintCost *= multiplier;
   }
@@ -17,11 +18,14 @@ class Hints { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<
   Hints(int initialCost) {
     hintCost = initialCost;
   }
-
+  
+  //give the user the correct input for the box they selected
   int giveHint(int box, int puzzle[][]) {
     return puzzle[box/9][box%9];
   }
 
+  //get the best hint available. Essentially, function, together with the one below it will generate a "possibility matrix" for all of the inputs, and then give a hint based on the box with the fewest possible options, which is
+ // the basis for most sudoku strategies
   int[][] getHint(int puzzleUnsolved[][], int puzzleSolved[][]) {
     int numOfPoss = 5;
     while (numOfPoss > 2) {
@@ -126,7 +130,6 @@ class Hints { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<
     System.out.println("Possible " + possible);
     return possible;
   }
-
 
   void getBestHint(int[][][] possible, int[][] puzzleUnsolved, int[][] puzzleSolved) {
 

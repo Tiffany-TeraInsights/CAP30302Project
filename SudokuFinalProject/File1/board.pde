@@ -4,7 +4,8 @@ class Board{
   float boardColor;
   int cellSize;
   
-  
+ 
+ // draws the lines of the sudoku board
  void drawBoard(){
     stroke(0);
     fill(255, 255, 255, 190);
@@ -25,6 +26,7 @@ class Board{
     
   }
   
+  // formats the penciled in numbers if there are any
   void showPencil(IntList pencil[][]) {
     textAlign(CENTER,CENTER);
     fill(#619886);
@@ -76,7 +78,8 @@ class Board{
       }
     }
   }
-          
+        
+  // show the marked values in the puzzle
   void showNumbers(int puzzle[][]){
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {
@@ -90,6 +93,7 @@ class Board{
     }
   }
   
+  //indicates whether or not the mouse is over the sudoku board
   boolean overSudokuBoard(){
     if(mouseX > 0 && mouseX < (width-150)){
       if(mouseY > 0 && mouseY < (height)){
@@ -99,6 +103,7 @@ class Board{
     return false;
   }
   
+  //validates user input with solution
   boolean checkInput(int input, int box, int solution[][]) {
     if(solution[box/9][box%9]==input) {
       return true;
@@ -108,12 +113,14 @@ class Board{
     }
   }
   
+  //returns the number of the sudoku box
   int boxNumber(){
     int colNum = mouseX/cellSize;
     int rowNum = mouseY/cellSize;
     return ((colNum) + (9 * (rowNum)));
   }
   
+  // draws red border around selected box
   void drawCursor(int xMouse, int yMouse) {
     stroke(255,0,0);
     strokeWeight(2);
@@ -125,6 +132,7 @@ class Board{
     rect(x, y, cellSize, cellSize);
   }
   
+  //check if the puzzle matches the solution
   boolean checkIfWon(int puzzle[][], int solution[][]){
     if(puzzle == solution){
       return true;
