@@ -49,6 +49,10 @@ Button mark;
 
 SoundFile backgroundMusic;
 SoundFile clickSound;
+PFont highScoreFont;
+PFont normalFont;
+
+PImage zenCircle;
 
 void setup() {
   size(600, 450);
@@ -82,10 +86,10 @@ void setup() {
   quit = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit2 = new Button(100, 30, 475, 400, "", #458B86, #68AFB2, #156164, #C2CECE);
   quit3 = new Button(150, 30, 230, 400, "", #458B86, #68AFB2, #156164, #C2CECE); 
-  activateHint = new Button(60, 30, 400, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
+  activateHint = new Button(60, 30, 465, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   autoHint = new Button(60, 30, 530, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   returnSudoku = new Button(100, 30, 250, 400, "", #E56E1E, #863A07, #FC8608, #0F0F0E);
-  activateHint = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
+  //activateHint = new Button(100, 30, 475, 250, "", #458B86, #68AFB2, #156164, #C2CECE);
   returnSudoku = new Button(100, 30, 250, 340, "", returnInside, 0, #F7F7F7, #0F0F0E);
   pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
   mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
@@ -93,14 +97,25 @@ void setup() {
   clickSound = new SoundFile(this, "ClickSound.mp3");
   backgroundMusic = new SoundFile(this, "background music.mp3");
   backgroundMusic.loop();
+  
+  highScoreFont = loadFont("BrushScriptMT-48.vlw");
+  normalFont = loadFont("LucidaSans-48.vlw");
+  
+  zenCircle = loadImage("ZenCircleUse.png");
 }
 
 void draw() {
   if (gameState == 0) //If we're in the menu.
   {
     menuBackground();
-    text("Best Score:", 200, 50);
-    text(hs.returnHighScores(),200,80);
+    textFont(highScoreFont);
+    textSize(20);
+    textAlign(CENTER);
+    image(zenCircle, 222, 190);
+    text("Best Score:", 300, 260);
+    text(hs.returnHighScores(), 295, 285);
+    textFont(normalFont);
+    textAlign(LEFT);
     B3.update();
     B4.update();
   } else if (gameState == 1) //Sudoku Puzzle.
@@ -122,7 +137,7 @@ void draw() {
     formatButton("Mini Game", 480, 200); 
 
     activateHint.update();
-    formatButton("Pick", 490, 270);
+    formatButton("Pick", 480, 270);
 
     autoHint.update();
     formatButton("Auto", 544, 270);
