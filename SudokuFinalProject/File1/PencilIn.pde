@@ -4,6 +4,7 @@ class PencilIn {
   PencilIn() {
   }
   
+  //creating a new int list at every location
   void create(int p[][]) {
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {
@@ -14,7 +15,9 @@ class PencilIn {
       }
     }
   }
+  
 
+  // function to modify content of each box, adds or removes numbers based on user input
   void modify(int input, int box) {
     boolean remove=false;
     if (pencil[box/9][box%9].hasValue(0)) {
@@ -33,7 +36,9 @@ class PencilIn {
       }
     }
   }
-
+  
+  
+  // when a cell is filled in (marked), it removes the pencil markings (sets it to 0)
   void update(int p[][]) {
     for (int i=0; i<9; i++) {
       for (int j=0; j<9; j++) {

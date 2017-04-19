@@ -35,6 +35,7 @@ class Puzzle {
     }
   }
   
+  //Take out numbers and replaces them with 0s, creating an easy difficulty game
   void easy() {
     int count=1;
     int rI=(int)random(0, 9);
@@ -67,7 +68,8 @@ class Puzzle {
       }
     }
   }
-
+  
+   //Take out numbers and replaces them with 0s, creating an hard difficulty game
   void hard() {
     int count =1;
     int rI=(int)random(0, 9);
@@ -100,7 +102,8 @@ class Puzzle {
       }
     }
   }
-
+  
+  // backtracking algorithm to make the initial puzzle. It fills in all 81 cells with numbers 1-9 according to rules of Sudoku. 
   Boolean generateSolution(int a, int b) {
     int k;
     if (a==8 && b==8) {
@@ -136,7 +139,8 @@ class Puzzle {
     }
     return true;
   }
-
+  
+  // Backtracking algorithm, a return true indicates that everything is good when a number is removed (for example, there aren't two solutions)
   Boolean checkIndex(int puz[][], int a, int b) {
     int k;
     if (a==8 && b==8) {
@@ -173,6 +177,7 @@ class Puzzle {
     return true;
   }
 
+  // calls checkIndex to check if number is a valid deletion from the puzzle to keep it unique
   Boolean testIndex(int puz[][], int a, int b, int indexI, int indexJ, int original) {
     for (int k=0; k<9; k++) {
       if (k==original-1) {
@@ -186,6 +191,7 @@ class Puzzle {
     return true;
   }
 
+  //checks for duplicates in rows and columns and that all 1-9 numbers are used
   Boolean checkRowsCols(int puz[][]) {
     Boolean rOne, rTwo, rThree, rFour, rFive, rSix, rSeven, rEight, rNine;
     Boolean cOne, cTwo, cThree, cFour, cFive, cSix, cSeven, cEight, cNine;
@@ -326,6 +332,7 @@ class Puzzle {
     return true;
   }
 
+  //verifies validity of 3x3 squares
   Boolean checkBlocks(int puz[][]) {
     Boolean one, two, three, four, five, six, seven, eight, nine;
     one=two=three=four=five=six=seven=eight=nine=false;
@@ -404,7 +411,7 @@ class Puzzle {
     return true;
   }
 
-  
+  // prints puzzle for verification purposed  
   void printPuzzle() {
     for (int i=0; i<9; i++) {
       if (i%3==0) {

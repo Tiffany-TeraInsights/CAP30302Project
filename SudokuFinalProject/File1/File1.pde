@@ -1,4 +1,4 @@
-//Project Yo //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+//Project Yo //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 //Added change
 /*
 gameState is used to dictate what "page" of the game we are on.
@@ -131,7 +131,9 @@ void draw() {
       sudokuBoard.drawCursor(x, y);
     }
     sideMenu();
-
+    
+    
+    //Button updates 
     rectMode(CORNER);
     wheelGame.update();
     formatButton("Mini Game", 480, 200); 
@@ -163,6 +165,8 @@ void draw() {
     text("Game Cost: " + 50, 467, 170);
     text("Hint Cost: " + hint.returnHintCost(), 470, 240);
     
+    
+    // if we are in the wheel game
   } else if (gameState == 2) {
     fortuneWheel.display();
 
@@ -208,10 +212,14 @@ void draw() {
       textSize(20);
       text("Return", 267, 363);
     }
+    
+    //if we are in the game over stage
   } else if (gameState == 3) {
     gameOverBackground();
     quit2.update();
     formatButton("Quit", 480, 420);
+    
+    //if we are in the winning stage
   } else if (gameState == 4) {
     youWonBackground();
     quit3.update();
@@ -219,6 +227,7 @@ void draw() {
   }
 }
 
+//checks if the puzzle matches the solution to go to the winning stage
 void checkIfDone(){
      int count = 0;
     for (int i = 0; i < 9; ++i) {
@@ -405,8 +414,9 @@ void keyTyped() {
       input=9;
     }
 
+    // mode 0 = marking. If its a valid input, it accepts the input. Else, it outputs a popover with the error message
     if (mode==0) {
-      if (input==0) {
+      if (input==0) { 
         GWindow invalidInputWindow;
         invalidInputWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
         invalidInputWindow.addDrawHandler(this, "windowDraw");
@@ -421,7 +431,7 @@ void keyTyped() {
         if (sudokuBoard.checkIfWon(puzzle.p, puzzle.solved) == true) {
           gameState = 4;
         }
-      } else {
+      } else { // if the marking is wrong, decrease the number of errors you have left and give a popover for it
         errors.decreaseE();
         if (errors.totalErrors!=0) {
           GWindow errorWindow;
@@ -434,12 +444,13 @@ void keyTyped() {
           gameState=3;
         }
       }
-    } else if (mode==1) {
+    } else if (mode==1) { // if in pencil mode, just modify, don't mark
       pencilIn.modify(input, box);
     }
   }
 }
 
+//resets the game including time, points, errors, puzzle, etc
 void resetGame() {
   Time.reset();
   points.reset();
@@ -448,12 +459,14 @@ void resetGame() {
   hintCost=100;
 }
 
+// resets the mini game, clears the wheel
 void resetMiniGame() {
   oneSpin = true;
   checkRewardOnce = true;
   fortuneWheel.resetValues();
 }
 
+// creates popover window
 void windowDraw(PApplet app, GWinData data) {
   MyData myData = (MyData) data;
   app.background(255);
@@ -498,6 +511,7 @@ void sideMenu() {
   image(sideMenuBackground, 450, -180);
 }
 
+//displays button text 
 void formatButton(String name, int px, int py) {
   textSize(14);
   fill(255);
