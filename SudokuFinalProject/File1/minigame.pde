@@ -69,13 +69,15 @@ class minigame
   //Displays the whole jam. 
   void display()
   {
-    //Display a Carnival Background.
+    //Display a Las Vegas Background.
     PImage miniGameBackground = loadImage("lasvegas.jpg");
     image(miniGameBackground, 0, 0);
     
     PImage lasVegasSign = loadImage("lvsign.png");
     image(lasVegasSign,400,10,200,200);
     
+    //Displays the side bar explaining what each color represents.
+    //Also has system to notify which color the spinner has landed on.
     noStroke();
     fill(#F7F7F7,150);
     rect(10,50,170,300);
@@ -172,6 +174,7 @@ class minigame
     
     text(" + : Gain      - : Loss",30,330);
     
+    //Displays the instructions.
     fill(255,150);
     rect(200,380,200,30);
     fill(0);
@@ -186,9 +189,9 @@ class minigame
        //Reduce the value of the rotation and spin.
        spinPower = spinPower - rotationDecrease;
        rotationDecrease = rotationDecrease * 0.9;
-
      }
-     else if(activeSpin && rotationDecrease < 0.005) //If the wheel is done spinning
+     //If the wheel is done spinning
+     else if(activeSpin && rotationDecrease < 0.005) 
      {
        //Stop updating spinPower as we are done.
      }
@@ -225,6 +228,7 @@ class minigame
     return spinPower;
   }
   
+  //Returns a boolean so "File1" can determine if the wheel is still spinning or not.
   boolean doneSpinning()
   {
     if(activeSpin && rotationDecrease < 0.005)
@@ -237,6 +241,7 @@ class minigame
     }
   }
   
+  //Resets all the values of the minigame for when we want to use it again.
   void resetValues()
   {
     spinPower = 0;

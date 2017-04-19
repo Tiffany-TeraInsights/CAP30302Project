@@ -65,14 +65,8 @@ class spinner
 
     popMatrix(); //Revert Translation.
   }
-
-  //Decides the reward value based on where the spinner landed.
-  int decideReward()
-  {
-    return 4;
-  }
-
-  //Returns a value to beginning spinning the spinner.
+  
+  //Returns a value to start spinning the spinner.
   int spin(float value)
   {
     return (int)(value * 1);

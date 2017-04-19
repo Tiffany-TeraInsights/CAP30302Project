@@ -94,19 +94,27 @@ void setup() {
   pencil = new Button(100, 30, 475, 350, "", #458B86, #68AFB2, #156164, #C2CECE);
   mark = new Button(100, 30, 475, 300, "", #458B86, #68AFB2, #156164, #C2CECE);
 
+  //Get sound files and begin playing backgroundMusic.
   clickSound = new SoundFile(this, "ClickSound.mp3");
   backgroundMusic = new SoundFile(this, "background music.mp3");
   backgroundMusic.loop();
   
+  //Get those fonts.
   highScoreFont = loadFont("BrushScriptMT-48.vlw");
   normalFont = loadFont("LucidaSans-48.vlw");
   
+  //Necessary image.
   zenCircle = loadImage("ZenCircleUse.png");
 }
 
 void draw() {
   if (gameState == 0) //If we're in the menu.
   {
+    /*
+     * Elegantly displays the Start Menu in a Zen style
+     * Displays the current highscore and the buttons to choose between 
+     * Easy and Hard.
+     */
     menuBackground();
     textFont(highScoreFont);
     textSize(20);
@@ -163,12 +171,18 @@ void draw() {
     text("Game Cost: " + 50, 467, 170);
     text("Hint Cost: " + hint.returnHintCost(), 470, 240);
     
-  } else if (gameState == 2) {
+  } else if (gameState == 2) { //In the Minigame.
+  
+    //Displays the Las Vegas themed minigame.
     fortuneWheel.display();
 
     rectMode(CORNER);
+    
+    //If we've spun, have finished spinning, and have yet to check for a reward.
     if (fortuneWheel.doneSpinning() && checkRewardOnce)
     {
+      //Gathers the reward and turns it into something substantial based on the color
+      //the wheel landed on.
       gambleReward = fortuneWheel.getReward();
       if (gambleReward == "TEAL") {
         points.doubleP();
@@ -201,6 +215,7 @@ void draw() {
        */
     }
 
+    //After we've spun and gathered our reward, display a button to return us to Sudoku.
     if (fortuneWheel.doneSpinning() && checkRewardOnce == false)
     {
       returnSudoku.isOver();
@@ -208,10 +223,14 @@ void draw() {
       textSize(20);
       text("Return", 267, 363);
     }
+    
+    //If we've run out of errors display a losing screen and a quit button.
   } else if (gameState == 3) {
     gameOverBackground();
     quit2.update();
     formatButton("Quit", 480, 420);
+    
+    //If we've won, display a winning screen and a "Return to Menu" button.
   } else if (gameState == 4) {
     youWonBackground();
     quit3.update();
@@ -219,6 +238,7 @@ void draw() {
   }
 }
 
+//Checks if the puzzle is complete.
 void checkIfDone(){
      int count = 0;
     for (int i = 0; i < 9; ++i) {
@@ -237,18 +257,21 @@ void checkIfDone(){
 
 void mouseClicked()
 {
+  //Play a clicking sound.
   clickSound.play();
   if (gameState == 0) //Only occurs when in the Main Menu
   {
     puzzle.createSolved();
 
-    if (B3.over) //If mouse if over button
+    if (B3.over) //If mouse if over Easy button
     {
+      //Create easy puzzle.
       puzzle.easy();
       pencilIn.create(puzzle.p);
       gameState = 1; //Bring us to Sudoku.
-    } else if (B4.over) //If mouse is over button
+    } else if (B4.over) //If mouse is over Hard button
     {
+      //Create hard puzzle.
       puzzle.hard();
       pencilIn.create(puzzle.p);
       gameState = 1; //Bring us to Sudoku.
@@ -259,8 +282,9 @@ void mouseClicked()
   } else if (gameState == 1) //If we're in Sudoku.
   {
     //<>// //<>//
-    if (wheelGame.over) //If the mouse is over the button.
+    if (wheelGame.over) //If the mouse is over the minigame button.
     {
+      //If we don't have enough points, display a window letting us know.
       if (points.returnPoints()<50) {
         GWindow miniWindow;
         miniWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
@@ -269,10 +293,13 @@ void mouseClicked()
         data.setOutput("Sorry, you must have\nat least 50 points to\nplay the mini game!");
         miniWindow.addData(data);
       } else {
+        //Otherwise, subtract out points and move us to the minigame!
         gameState = 2; //Move Us to Mini Game State.
         points.increaseP(-50);
       }
-    } else if (activateHint.over) { //<>// //<>//
+      //If we're over the "Pick" hint button.
+    } else if (activateHint.over) { //<>//
+      //If we don't have enough points for a hint, display a window letting us know.
       if (points.returnPoints()<hintCost) { //<>// //<>// //<>//
         GWindow hintWindow;
         hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
@@ -281,9 +308,11 @@ void mouseClicked()
         data.setOutput("Sorry, you haven't\nearned enough points\nto receive a hint yet!\nThe current cost for a\nhint is " + hintCost + " points.");
         hintWindow.addData(data);
       } else if (boxSelected) {
+        //If we do have enough points, give us a hint and subtract from out points.
         puzzle.p[box/9][box%9]=hint.giveHint(box, puzzle.solved);
         points.increaseP(hintCost*(-1));
       } else {
+        //If we ask for a hint without having a box selected, remind us with instructions.
         GWindow hintWindow;
         hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
         hintWindow.addDrawHandler(this, "windowDraw");
@@ -292,6 +321,9 @@ void mouseClicked()
         hintWindow.addData(data);
       }
     } else if (autoHint.over) {
+      //If we clicked on the "auto" hint button
+      
+      //If we don't have enough points, remind us the cost of the points with a well placed window.
       if (points.returnPoints()<hintCost) { //<>// //<>//
        GWindow hintWindow;
        hintWindow = GWindow.getWindow(this, "", 860, 618, 300, 200, JAVA2D);
@@ -301,6 +333,7 @@ void mouseClicked()
        hintWindow.addData(data);
        }
        else{ 
+         //If we have enough points, GIVE. US. THAT. HINT. YEAH! and charge us points of course.
       puzzle.p = hint.getHint(puzzle.p, puzzle.solved);
       if (puzzle.p == puzzle.solved) {
         System.out.println("Solved");
@@ -310,13 +343,16 @@ void mouseClicked()
       points.increaseP(hintCost*(-1));
        }
     } else if (quit.over) {
+      //If the quit button is clicked, display the start menu and reset everything.
       resetGame();
       gameState = 0;
     } else if (mark.over) {
+      //If the mark button is clicked, set the mode to "mark" and off of "Pencil".
       mode = 0;
       pencil.selected = false;
       mark.selected = true;
     } else if (pencil.over) {
+      //If the pencil button is clicked, set the mode to "pencil" and off of "mark".
       mode = 1;
       mark.selected = false;
       pencil.selected = true;
@@ -330,20 +366,23 @@ void mouseClicked()
     } else {
       boxSelected=false;
     }
-  } else if (gameState == 2)
+  } else if (gameState == 2) //Only in minigame.
   {
     if (returnSudoku.over)
     {
+      //If the return button is clicked, reset minigame and display the sudoku frame.
       gameState = 1;
       resetMiniGame();
     }
-  } else if (gameState == 3) {
+  } else if (gameState == 3) { //Only in lose screen.
     if (quit2.over) {
+      //If the quit button is clicked, reset the whole game and return to the start menu.
       gameState = 0;
       resetGame();
     }
-  } else if (gameState == 4) {
+  } else if (gameState == 4) { //Only in the win screen.
     if (quit3.over) {
+      //If the quit button is clicked, reset the whole game and return to the start menu.
       gameState = 0; 
       resetGame();
     }
@@ -383,6 +422,9 @@ void keyReleased()
 }
 
 void keyTyped() {
+  /*
+   * Only if a box is selected do we get the correct input and only accept numbers.
+   */
   if (boxSelected) {
     int input=0;
     if (key=='1') {
@@ -440,6 +482,7 @@ void keyTyped() {
   }
 }
 
+//Reset everything.
 void resetGame() {
   Time.reset();
   points.reset();
@@ -448,12 +491,14 @@ void resetGame() {
   hintCost=100;
 }
 
+//Reset the minigame.
 void resetMiniGame() {
   oneSpin = true;
   checkRewardOnce = true;
   fortuneWheel.resetValues();
 }
 
+//For the windows
 void windowDraw(PApplet app, GWinData data) {
   MyData myData = (MyData) data;
   app.background(255);
@@ -463,6 +508,7 @@ void windowDraw(PApplet app, GWinData data) {
   app.text(myData.output, 10, 40);
 }
 
+//Menu background display.
 void menuBackground() {
   background(#B87E3E);
   PImage startBackground = loadImage("ZenGarden1.jpg");
@@ -471,24 +517,28 @@ void menuBackground() {
   image(image, width/4, height/4);
 }
 
+//Game background display.
 void gameBackground() {
   background(#B87E3E);
   PImage mainWoodBackground = loadImage("SudokuSideMenu.jpg");
   image(mainWoodBackground, 0, 0);
 }
 
+//Game over display.
 void gameOverBackground() {
   background(0);
   PImage loseBackground = loadImage("youjustlost.jpg");
   image(loseBackground, 100, 25);
 }
 
+//Game win display.
 void youWonBackground() {
   background(0);
   PImage winBackground = loadImage("youwin.png");
   image(winBackground, 150,25,300,300);
 }
 
+//Side Menu display.
 void sideMenu() {
   fill(0);
   noStroke();
@@ -498,6 +548,7 @@ void sideMenu() {
   image(sideMenuBackground, 450, -180);
 }
 
+//Format buttons.
 void formatButton(String name, int px, int py) {
   textSize(14);
   fill(255);
